@@ -1,7 +1,7 @@
 name: marvel_heroes_home
 description: "A new Flutter project."
 publish_to: 'none'
-version: 0.1.0
+version: 1.0.0
 
 environment:
   sdk: ^3.5.2
@@ -16,4 +16,9 @@ dev_dependencies:
   flutter_lints: ^4.0.0
 
 flutter:
-  uses-material-design: true
+
+dependency_overrides:
+  marvel_heroes_commons:
+    path: ../marvel_heroes_commons
+  marvel_heroes_core:
+    path: ../marvel_heroes_core
