@@ -5,4 +5,6 @@ export 'package:flutter/cupertino.dart'
 export 'package:flutter/material.dart'
     hide Color, Colors, ConnectionState, MenuController;
 
-export 'src/lib_dependencies.dart';
+export 'src/core/core.dart';
+export 'src/domain/domain.dart';
+export 'src/provider/provider.dart';
