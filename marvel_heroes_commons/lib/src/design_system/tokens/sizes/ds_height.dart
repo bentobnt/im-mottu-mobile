@@ -1,6 +1,9 @@
 import 'package:marvel_heroes_commons/marvel_heroes_commons.dart';
+import 'package:marvel_heroes_commons/src/design_system/tokens/sizes/sizes.dart';
 
 class DSHeight {
+  static DSHeight h_0 = DSHeight._(DSSizesHeights.dsh_0);
+
   static DSHeight h_1 = DSHeight._(DSSizesHeights.dsh_1);
 
   static DSHeight h_1_2 = DSHeight._(DSSizesHeights.dsh_1_2);
@@ -8,6 +11,8 @@ class DSHeight {
   static DSHeight h_2 = DSHeight._(DSSizesHeights.dsh_2);
 
   static DSHeight h_4 = DSHeight._(DSSizesHeights.dsh_4);
+
+  static DSHeight h_8 = DSHeight._(DSSizesHeights.dsh_8);
 
   static DSHeight h_12 = DSHeight._(DSSizesHeights.dsh_12);
 
@@ -21,7 +26,11 @@ class DSHeight {
 
   static DSHeight h_48 = DSHeight._(DSSizesHeights.dsh_48);
 
-  static DSHeight h_80 = DSHeight._(DSSizesHeights.dsh_80);
+  static DSHeight h_112 = DSHeight._(DSSizesHeights.dsh_112);
+
+  static DSHeight h_224 = DSHeight._(DSSizesHeights.dsh_224);
+
+  static DSHeight h_336 = DSHeight._(DSSizesHeights.dsh_336);
 
   final double _baseValue;
 

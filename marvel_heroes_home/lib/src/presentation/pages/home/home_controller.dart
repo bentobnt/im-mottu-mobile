@@ -1,7 +1,6 @@
 import 'package:marvel_heroes_commons/marvel_heroes_commons.dart';
 import 'package:marvel_heroes_core/marvel_heroes_core.dart';
 import 'package:marvel_heroes_home/src/domain/entities/hero_entity.dart';
-import 'package:marvel_heroes_home/src/domain/entities/heroes_response_entity.dart';
 import 'package:marvel_heroes_home/src/domain/use_cases/get_heroes_list_use_case.dart';
 
 class HomeController extends BaseController {
@@ -9,8 +8,10 @@ class HomeController extends BaseController {
 
   RxBool isLoading = RxBool(true);
   RxBool showError = RxBool(false);
+  RxBool showSearchBar = RxBool(false);
 
-  late List<HeroEntity> heroesList;
+  List<HeroEntity> _heroesList = List.empty();
+  final RxList<HeroEntity> heroesListFiltered = RxList.empty();
 
   HomeController({
     required IGetHeroesListUsecase getHeroesListUsecase,
@@ -24,7 +25,8 @@ class HomeController extends BaseController {
 
   Future<void> _getHeroesList() async {
     _getHeroesListUsecase().then((response) {
-      _setupHeroesListWithResponse(response);
+      _heroesList = response.heroes;
+      heroesListFiltered.addAll(response.heroes);
     }).onError((error, stackTrace) {
       showError(true);
     }).whenComplete(
@@ -32,7 +34,15 @@ class HomeController extends BaseController {
     );
   }
 
-  void _setupHeroesListWithResponse(HeroesResponseEntity response) {
-    heroesList = response.heroes;
+  void search(String query) {
+    heroesListFiltered.clear();
+    if (query.isEmpty) {
+      heroesListFiltered.addAll(_heroesList);
+    } else {
+      var filtered = _heroesList.where((hero) {
+        return hero.name.toLowerCase().contains(query.toLowerCase());
+      }).toList();
+      heroesListFiltered.addAll(filtered);
+    }
   }
 }

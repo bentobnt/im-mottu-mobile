@@ -1,5 +1,4 @@
 import 'package:marvel_heroes_commons/src/design_system/design_system.dart';
-import 'package:marvel_heroes_commons/src/design_system/sizes/ds_sizes_width.dart';
 
 class DSFontSize {
   static DSFontSize font_32 = DSFontSize._(DSSizesWidths.dsw_32);

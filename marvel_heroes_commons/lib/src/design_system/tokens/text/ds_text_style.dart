@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:marvel_heroes_commons/src/design_system/sizes/sizes.dart';
-import 'package:marvel_heroes_commons/src/design_system/text/text.dart';
+import 'package:marvel_heroes_commons/src/design_system/tokens/sizes/sizes.dart';
+import 'package:marvel_heroes_commons/src/design_system/tokens/text/text.dart';
 
 class DSTextStyle extends BaseTextStyle {
   static final heading = DSTextStyle._title();
@@ -11,6 +11,11 @@ class DSTextStyle extends BaseTextStyle {
 
   static final footnote = DSTextStyle._footnoteLight();
   static final footnote2 = DSTextStyle._footnoteThin();
+
+  // buttons
+  static final buttonBig = DSTextStyle._buttonBig();
+  static final buttonMedium = DSTextStyle._buttonMedium();
+  static final buttonSmall = DSTextStyle._buttonSmall();
 
   DSTextStyle._title()
       : super(
@@ -62,6 +67,34 @@ class DSTextStyle extends BaseTextStyle {
           fontSize: DSFontSize.font_8.value,
           height: DSHeight.h_1_2.value,
           letterSpacing: DSLetterSpacing.ls_0_25.value,
+          fontWeight: FontWeight.w400,
+        );
+
+  // Buttons
+  DSTextStyle._buttonBig()
+      : super(
+          fontFamily: FontFamily.regular.family,
+          fontSize: DSFontSize.font_20.value,
+          height: DSHeight.h_1_2.value,
+          letterSpacing: DSLetterSpacing.ls_0_5.value,
+          fontWeight: FontWeight.w700,
+        );
+
+  DSTextStyle._buttonMedium()
+      : super(
+          fontFamily: FontFamily.regular.family,
+          fontSize: DSFontSize.font_16.value,
+          height: DSHeight.h_1_2.value,
+          letterSpacing: DSLetterSpacing.ls_0_5.value,
+          fontWeight: FontWeight.w700,
+        );
+
+  DSTextStyle._buttonSmall()
+      : super(
+          fontFamily: FontFamily.regular.family,
+          fontSize: DSFontSize.font_12.value,
+          height: DSHeight.h_1_2.value,
+          letterSpacing: DSLetterSpacing.ls_0_5.value,
           fontWeight: FontWeight.w400,
         );
 

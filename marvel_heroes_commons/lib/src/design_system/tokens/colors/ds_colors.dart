@@ -30,7 +30,7 @@ abstract class DSColors {
   static const DSColor text = DSColor(0XFF333333);
 
   static const DSColor success = DSColor(0XFF3C9F40);
-  static const DSColor error = DSColor(0XFFFF4C4C);
+  static const DSColor desactivateButton = DSColor(0XFFF5A3A3);
 
   static const DSColor black = DSColor(0XFF000000);
   static const DSColor white = DSColor(0XFFFFFFFF);

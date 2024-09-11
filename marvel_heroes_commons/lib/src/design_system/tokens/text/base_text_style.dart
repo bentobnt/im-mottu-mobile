@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:marvel_heroes_commons/src/design_system/design_system.dart';
-import 'package:marvel_heroes_commons/src/design_system/text/text.dart';
+import 'package:marvel_heroes_commons/src/design_system/tokens/colors/ds_colors.dart';
+import 'package:marvel_heroes_commons/src/design_system/tokens/text/text.dart';
 
 class BaseTextStyle extends TextStyle {
   BaseTextStyle({

@@ -185,21 +185,21 @@ packages:
     source: hosted
     version: "2.4.0"
   marvel_heroes_commons:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
       path: "../marvel_heroes_commons"
       relative: true
     source: path
     version: "1.0.0"
   marvel_heroes_core:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
       path: "../marvel_heroes_core"
       relative: true
     source: path
     version: "1.0.0"
   marvel_heroes_home:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
       path: "../marvel_heroes_home"
       relative: true

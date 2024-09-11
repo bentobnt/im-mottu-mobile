@@ -5,7 +5,6 @@ import 'package:marvel_heroes_commons/marvel_heroes_commons.dart';
 class SplashController extends GetxController {
   Future<void> initialConfiguration() async {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await Get.deleteAll(force: true);
       AppBinding().dependencies();
 
       await Future.delayed(const Duration(seconds: 2));

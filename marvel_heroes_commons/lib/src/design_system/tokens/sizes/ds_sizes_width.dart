@@ -7,6 +7,7 @@ abstract class DSSizesWidths {
   static double dsw_0_25 = 0.25;
   static double dsw_0 = 0.0;
   static double dsw_1 = 1.0;
+  static double dsw_2 = 2.0;
   static double dsw_4 = 4.0;
   static double dsw_8 = 8.0;
   static double dsw_12 = 12.0;
