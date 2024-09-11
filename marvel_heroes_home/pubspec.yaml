@@ -9,6 +9,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  marvel_heroes_commons:
+    
+  marvel_heroes_core:
 
 dev_dependencies:
   flutter_test:
