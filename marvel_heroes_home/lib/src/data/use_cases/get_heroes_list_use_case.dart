@@ -10,7 +10,7 @@ class GetHeroesListUsecase implements IGetHeroesListUsecase {
   }) : _getHeroesListRepository = getHeroesListRepository;
 
   @override
-  Future<HeroesResponseEntity> call() {
-    return _getHeroesListRepository.getHeroesList();
+  Future<HeroesResponseEntity> call({required int offset}) {
+    return _getHeroesListRepository.getHeroesList(offset: offset);
   }
 }
