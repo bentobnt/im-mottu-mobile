@@ -1,7 +1,7 @@
 import 'package:marvel_heroes_commons/marvel_heroes_commons.dart';
 import 'package:marvel_heroes_core/marvel_heroes_core.dart';
 
-enum DSSvgIconsEnum { favorite, home, search, close }
+enum DSSvgIconsEnum { favorite, home, search, close, arrowDown, arrowUp }
 
 abstract class DSSvgIcons {
   static const _icons = {
@@ -9,6 +9,8 @@ abstract class DSSvgIcons {
     DSSvgIconsEnum.home: 'assets/svg/home.svg',
     DSSvgIconsEnum.search: 'assets/svg/search.svg',
     DSSvgIconsEnum.close: 'assets/svg/close.svg',
+    DSSvgIconsEnum.arrowDown: 'assets/svg/arrow_down.svg',
+    DSSvgIconsEnum.arrowUp: 'assets/svg/arrow_up.svg',
   };
 
   static SvgPicture getIcon(DSSvgIconsEnum type,

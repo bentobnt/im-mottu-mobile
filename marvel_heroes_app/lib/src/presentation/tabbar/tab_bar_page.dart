@@ -42,10 +42,11 @@ class TabBarPage extends GetView<TabBarController> {
                 settings: settings,
                 popGesture: false,
                 page: () => Material(
-                  color: DSColors.primary,
+                  color: DSColors.secondary,
                   child: Container(
-                    child: DSSvgIcons.getIcon(
-                      DSSvgIconsEnum.favorite,
+                    child: DSImages.getImage(
+                      DSPngImagesEnum.ironMan,
+                      size: DSSizesWidths.dsw_112,
                     ),
                   ),
                 ),

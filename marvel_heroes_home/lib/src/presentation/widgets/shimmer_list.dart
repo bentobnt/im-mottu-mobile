@@ -12,7 +12,7 @@ class ShimmerListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      padding: EdgeInsets.symmetric(horizontal: DsWidth.w_16.value),
       child: ListView(
         shrinkWrap: false,
         children: _getItens(),
@@ -25,16 +25,16 @@ class ShimmerListWidget extends StatelessWidget {
     for (var i = 0; i < 10; i++) {
       list.add(
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(DsWidth.w_8.value),
           child: Shimmer.fromColors(
             enabled: true,
             baseColor: DSColors.tertiary,
             highlightColor: DSColors.divider,
             child: Container(
-              height: 80,
+              height: DSHelper.height * 0.2,
               decoration: BoxDecoration(
                 color: DSColors.tertiary,
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(DSHeight.h_12.value),
               ),
             ),
           ),

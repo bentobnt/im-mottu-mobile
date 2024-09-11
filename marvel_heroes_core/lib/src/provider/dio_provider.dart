@@ -4,20 +4,21 @@ import '../../marvel_heroes_core.dart';
 class DioProvider implements IDioProvider {
   final Dio _dio = Dio();
   final String _baseURL = 'http://gateway.marvel.com/v1/public/';
-  final defaultParameters = {
-    'apikey': '94af7440aa382246e8433cc8bff1b39d',
-    'hash': 'ec8f70fe7233a865a22f68945c36560b',
-    'ts': '1725912851'
-  };
 
   DioProvider() {
     _setupCacheInterceptor();
   }
 
+  _addDefaultParamters(HttpRequest request) {
+    request.queryParameters?['apikey'] = '94af7440aa382246e8433cc8bff1b39d';
+    request.queryParameters?['hash'] = 'ec8f70fe7233a865a22f68945c36560b';
+    request.queryParameters?['ts'] = '1725912851';
+  }
+
   @override
   Future<HttpResponse<T>> get<T>(HttpRequest request) async {
     try {
-      _addDefaultParameters(request);
+      _addDefaultParamters(request);
 
       if (!request.useInterceptors) {
         _dio.interceptors.clear();
@@ -46,6 +47,8 @@ class DioProvider implements IDioProvider {
   @override
   Future<HttpResponse<T>> post<T>(HttpRequest request) async {
     try {
+      _addDefaultParamters(request);
+
       if (!request.useInterceptors) {
         _dio.interceptors.clear();
       }
@@ -66,10 +69,6 @@ class DioProvider implements IDioProvider {
         response: _mapperResponse(e.response),
       );
     }
-  }
-
-  void _addDefaultParameters(HttpRequest request) {
-    request.queryParameters = defaultParameters;
   }
 
   void _setupCacheInterceptor() {

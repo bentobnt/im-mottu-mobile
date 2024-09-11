@@ -10,10 +10,13 @@ class HomeDataSource implements IHomeDataSource {
   }) : _httpProvider = httpProvider;
 
   @override
-  Future<HeroesResponseModel> getHeroesList() async {
+  Future<HeroesResponseModel> getHeroesList({required int offset}) async {
     try {
       final request = HttpRequest(
         url: '/characters',
+        queryParameters: {
+          'offset': offset,
+        },
       );
 
       final response = await _httpProvider.get(request);

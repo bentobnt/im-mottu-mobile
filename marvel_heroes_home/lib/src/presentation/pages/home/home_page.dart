@@ -25,7 +25,7 @@ class HomePage extends GetView<HomeController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Heróis',
+                        'Personagens',
                         overflow: TextOverflow.ellipsis,
                         style: DSTextStyle.body.copyWith(
                           color: DSColors.white,
@@ -89,7 +89,7 @@ class HomePage extends GetView<HomeController> {
         focusedBorder: const UnderlineInputBorder(
           borderSide: BorderSide(color: DSColors.white),
         ),
-        hintText: 'Digite um nome de herói',
+        hintText: 'Digite o nome de um personagem',
         hintStyle: DSTextStyle.body2.copyWith(
           color: DSColors.divider,
         ),
@@ -100,73 +100,102 @@ class HomePage extends GetView<HomeController> {
 
   Widget _getHomeContent() {
     return Obx(
-      () => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      () => Stack(
+        alignment: Alignment.center,
         children: [
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: DsWidth.w_16.value,
-              vertical: DSHeight.h_8.value,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Heróis encontrados: ${controller.heroesListFiltered.length.toString()}',
-                  style: DSTextStyle.footnote,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: DsWidth.w_20.value,
+                  vertical: DSHeight.h_16.value,
                 ),
-                Text(
-                  'Total: 10',
-                  style: DSTextStyle.footnote,
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: controller.heroesListFiltered.length,
-              itemBuilder: (BuildContext context, int index) {
-                final name = controller.heroesListFiltered[index].name;
-                final url = controller.heroesListFiltered[index].imageUrl;
-                return Container(
-                  margin: EdgeInsets.symmetric(
-                    vertical: DSHeight.h_12.value,
-                    horizontal: DSHeight.h_16.value,
-                  ),
-                  decoration: BoxDecoration(
-                    color: DSColors.primary,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: Image.network(
-                          url,
-                          width: DSHelper.width * 0.44,
-                          height: DSHelper.height * 0.2,
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                      SizedBox(
-                        width: DsWidth.w_4.value,
-                      ),
-                      Expanded(
-                        child: Text(
-                          name,
-                          textAlign: TextAlign.center,
-                          style: DSTextStyle.body.copyWith(
-                            color: DSColors.white,
-                            fontWeight: FontWeight.bold,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Mostrando ${controller.heroesListFiltered.length.toString()} de ${controller.numberOfHeroes} personagens',
+                      style: DSTextStyle.footnote,
+                    ),
+                    Visibility(
+                      visible: !controller.showSearchBar.value,
+                      child: Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () => controller.scrollToBottom(true),
+                            child: DSSvgIcons.getIcon(DSSvgIconsEnum.arrowDown,
+                                color: DSColors.secondary),
                           ),
+                          GestureDetector(
+                            onTap: () => controller.scrollToBottom(false),
+                            child: DSSvgIcons.getIcon(DSSvgIconsEnum.arrowUp,
+                                color: DSColors.secondary),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: controller.heroesListFiltered.length,
+                  controller: controller.scrollController,
+                  itemBuilder: (BuildContext context, int index) {
+                    final name = controller.heroesListFiltered[index].name;
+                    final url = controller.heroesListFiltered[index].imageUrl;
+                    return GestureDetector(
+                      onTap: controller.goToDetailsPage,
+                      child: Container(
+                        margin: EdgeInsets.symmetric(
+                          vertical: DSHeight.h_12.value,
+                          horizontal: DSHeight.h_16.value,
+                        ),
+                        decoration: BoxDecoration(
+                          color: DSColors.primary,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: Image.network(
+                                url,
+                                width: DSHelper.width * 0.44,
+                                height: DSHelper.height * 0.2,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                            SizedBox(
+                              width: DsWidth.w_4.value,
+                            ),
+                            Expanded(
+                              child: Text(
+                                name,
+                                textAlign: TextAlign.center,
+                                style: DSTextStyle.body.copyWith(
+                                  color: DSColors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
-                );
-              },
-            ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+          Obx(
+            () => controller.fetchNewPage.value
+                ? const CircularProgressIndicator(
+                    color: DSColors.secondary,
+                  )
+                : const SizedBox.shrink(),
           ),
         ],
       ),

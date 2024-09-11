@@ -23,7 +23,7 @@ class TabBarController extends BaseController {
         break;
       case 1:
         currentIndex(index);
-        navigatorKey.currentState?.popAndPushNamed(AppRoutes.home.initial);
+        navigatorKey.currentState?.popAndPushNamed(AppRoutes.home.favorites);
         break;
     }
   }
