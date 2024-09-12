@@ -93,10 +93,6 @@ class HeroDetailsPage extends GetView<HeroDetailsController> {
                 itemCount: 20,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (BuildContext context, int index) {
-                  final title =
-                      'ifqhofhwofhwoqifhwoqifhwoqifhwioqfhwioqfhwioqfhwioqhf'; //response.heroes[index].title;
-                  final image = 'teste';
-                  //response.heroes[index].imageUrl;
                   return Container(
                     width: DSHelper.width * 0.5,
                     margin: EdgeInsets.symmetric(
@@ -115,7 +111,6 @@ class HeroDetailsPage extends GetView<HeroDetailsController> {
                             DSPngImagesEnum.error,
                             fit: BoxFit.scaleDown,
                             size: DSHelper.height * 0.35,
-                            //size: DSSizesWidths.dsw_112,
                           ),
                           // Image.network(
                           //   image ?? '',
@@ -127,7 +122,7 @@ class HeroDetailsPage extends GetView<HeroDetailsController> {
                           child: Padding(
                             padding: EdgeInsets.all(DSHeight.h_8.value),
                             child: Text(
-                              title ?? '',
+                              'teste',
                               textAlign: TextAlign.center,
                               style: DSTextStyle.footnote.copyWith(
                                 color: DSColors.black,
