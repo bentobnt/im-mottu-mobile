@@ -139,53 +139,58 @@ class HomePage extends GetView<HomeController> {
                 ),
               ),
               Expanded(
-                child: ListView.builder(
-                  itemCount: controller.heroesListFiltered.length,
+                child: Scrollbar(
                   controller: controller.scrollController,
-                  itemBuilder: (BuildContext context, int index) {
-                    final name = controller.heroesListFiltered[index].name;
-                    final url = controller.heroesListFiltered[index].imageUrl;
-                    return GestureDetector(
-                      onTap: controller.goToDetailsPage,
-                      child: Container(
-                        margin: EdgeInsets.symmetric(
-                          vertical: DSHeight.h_12.value,
-                          horizontal: DSHeight.h_16.value,
+                  child: ListView.builder(
+                    itemCount: controller.heroesListFiltered.length,
+                    controller: controller.scrollController,
+                    itemBuilder: (BuildContext context, int index) {
+                      final name = controller.heroesListFiltered[index].name;
+                      final url = controller.heroesListFiltered[index].imageUrl;
+                      return GestureDetector(
+                        onTap: () => controller.goToDetailsPage(
+                          selectedHero: controller.heroesListFiltered[index],
                         ),
-                        decoration: BoxDecoration(
-                          color: DSColors.primary,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(12),
-                              child: Image.network(
-                                url,
-                                width: DSHelper.width * 0.44,
-                                height: DSHelper.height * 0.2,
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                            SizedBox(
-                              width: DsWidth.w_4.value,
-                            ),
-                            Expanded(
-                              child: Text(
-                                name,
-                                textAlign: TextAlign.center,
-                                style: DSTextStyle.body.copyWith(
-                                  color: DSColors.white,
-                                  fontWeight: FontWeight.bold,
+                        child: Container(
+                          margin: EdgeInsets.symmetric(
+                            vertical: DSHeight.h_12.value,
+                            horizontal: DSHeight.h_16.value,
+                          ),
+                          decoration: BoxDecoration(
+                            color: DSColors.primary,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(12),
+                                child: Image.network(
+                                  url ?? '',
+                                  width: DSHelper.width * 0.44,
+                                  height: DSHelper.height * 0.2,
+                                  fit: BoxFit.fill,
                                 ),
                               ),
-                            ),
-                          ],
+                              SizedBox(
+                                width: DsWidth.w_4.value,
+                              ),
+                              Expanded(
+                                child: Text(
+                                  name ?? '',
+                                  textAlign: TextAlign.center,
+                                  style: DSTextStyle.body.copyWith(
+                                    color: DSColors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
               ),
             ],

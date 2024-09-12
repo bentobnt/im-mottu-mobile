@@ -1,10 +1,20 @@
 import 'package:flutter/widgets.dart';
 import '../../marvel_heroes_commons.dart';
 
+// ignore: must_be_immutable
 class DefaultErrorWidget extends StatelessWidget {
-  final Function() tryAgainPressed;
+  String? title;
+  String? subTitle;
+  DSPngImagesEnum? image;
+  final Function()? tryAgainPressed;
 
-  const DefaultErrorWidget({required this.tryAgainPressed, super.key});
+  DefaultErrorWidget({
+    this.tryAgainPressed,
+    this.title,
+    this.subTitle,
+    this.image,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,14 +24,14 @@ class DefaultErrorWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           DSImages.getImage(
-            DSPngImagesEnum.error,
+            image ?? DSPngImagesEnum.error,
             size: DSSizesWidths.dsw_112,
           ),
           SizedBox(
-            height: DSHeight.h_48.value,
+            height: DSHeight.h_32.value,
           ),
           Text(
-            'Algo de errado aconteceu',
+            title ?? 'Algo de errado aconteceu',
             textAlign: TextAlign.center,
             style: DSTextStyle.subtitle.copyWith(
               color: DSColors.primary,
@@ -31,18 +41,26 @@ class DefaultErrorWidget extends StatelessWidget {
             height: DSHeight.h_16.value,
           ),
           Text(
-            'No momento não conseguimos carregar as informações, mas não se preocupe, nosso heróis já estão resolvendo o problema, tente novamente mais tarde',
+            subTitle ??
+                'No momento não conseguimos carregar as informações, mas não se preocupe, nosso heróis já estão resolvendo o problema, tente novamente mais tarde',
             textAlign: TextAlign.center,
             style: DSTextStyle.body2,
           ),
-          SizedBox(
-            height: DSHeight.h_48.value,
+          Visibility(
+            visible: tryAgainPressed != null,
+            child: SizedBox(
+              height: DSHeight.h_32.value,
+            ),
           ),
-          // OutlinedButtonDSWidget(
-          //   text: 'Tentar novamente',
-          //   onTap: () => tryAgain.call(),
-          //   color: GuideColors.colorStrongOrange,
-          // ),
+          Visibility(
+            visible: tryAgainPressed != null,
+            child: DSButton(
+              text: 'Tentar novamente',
+              onTap: tryAgainPressed,
+              type: DSButtonTypeEnum.secondary,
+              size: DSButtonSizeEnum.big,
+            ),
+          ),
         ],
       ),
     );

@@ -6,6 +6,7 @@ import 'package:marvel_heroes_home/src/domain/repositories/get_heroes_list_repos
 import 'package:marvel_heroes_home/src/domain/use_cases/get_heroes_list_use_case.dart';
 import 'package:marvel_heroes_home/src/infra/data_sources/home_datasource.dart';
 import 'package:marvel_heroes_home/src/presentation/pages/home/home_controller.dart';
+import 'package:marvel_heroes_home/src/presentation/stores/home_store.dart';
 
 class HomeBindings extends Bindings {
   @override
@@ -31,9 +32,15 @@ class HomeBindings extends Bindings {
       fenix: true,
     );
 
+    Get.lazyPut<HomeStore>(
+      () => HomeStore(),
+      fenix: true,
+    );
+
     Get.lazyPut(
       () => HomeController(
         getHeroesListUsecase: Get.find(),
+        homeStore: Get.find(),
       ),
       fenix: true,
     );
