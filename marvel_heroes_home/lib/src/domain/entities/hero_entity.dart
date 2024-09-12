@@ -1,9 +1,15 @@
 class HeroEntity {
-  String name;
-  String imageUrl;
+  int id;
+  String? name;
+  String? title;
+  String? desc;
+  String? imageUrl;
 
   HeroEntity({
-    required this.name,
-    required this.imageUrl,
+    required this.id,
+    this.name,
+    this.title,
+    this.desc,
+    this.imageUrl,
   });
 }

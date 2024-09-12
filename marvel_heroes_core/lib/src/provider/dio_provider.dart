@@ -10,6 +10,8 @@ class DioProvider implements IDioProvider {
   }
 
   _addDefaultParamters(HttpRequest request) {
+    request.queryParameters ??= {};
+
     request.queryParameters?['apikey'] = '94af7440aa382246e8433cc8bff1b39d';
     request.queryParameters?['hash'] = 'ec8f70fe7233a865a22f68945c36560b';
     request.queryParameters?['ts'] = '1725912851';

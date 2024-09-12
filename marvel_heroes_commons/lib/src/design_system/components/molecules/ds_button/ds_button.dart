@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:marvel_heroes_commons/marvel_heroes_commons.dart';
-import 'package:marvel_heroes_commons/src/design_system/tokens/colors/ds_colors.dart';
 import 'package:marvel_heroes_commons/src/design_system/tokens/sizes/ds_button_heigth_size.dart';
 import 'package:marvel_heroes_commons/src/design_system/tokens/sizes/ds_button_width_size.dart';
 
@@ -60,21 +59,17 @@ class DSButton extends StatelessWidget {
           ),
         ),
         child: Center(
-          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            // DSText(
-            //   text,
-            //   style: style,
-            //   color: textColor,
-            // ),
-            // icon != null
-            //     ? DSIcon(
-            //         icon: icon!,
-            //         color: textColor,
-            //         size: DSIconSize.small,
-            //       )
-            //     :
-            const SizedBox(),
-          ]),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                text,
+                style: style.copyWith(
+                  color: textColor,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
