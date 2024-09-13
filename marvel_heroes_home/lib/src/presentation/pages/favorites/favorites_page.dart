@@ -1,10 +1,9 @@
 import 'package:flutter/services.dart';
 import 'package:marvel_heroes_commons/marvel_heroes_commons.dart';
 import 'package:marvel_heroes_core/marvel_heroes_core.dart';
-import 'package:marvel_heroes_home/src/presentation/pages/home/home_controller.dart';
-import 'package:marvel_heroes_home/src/presentation/widgets/shimmer_list.dart';
+import 'package:marvel_heroes_home/src/presentation/pages/favorites/favorites_controller.dart';
 
-class FavoritesPage extends GetView<HomeController> {
+class FavoritesPage extends GetView<FavoritesController> {
   const FavoritesPage({super.key});
 
   @override
@@ -40,6 +39,11 @@ class FavoritesPage extends GetView<HomeController> {
   }
 
   Widget _getFavoritesContent() {
-    return Container(height: 200, color: DSColors.success);
+    return Container(
+      height: 200,
+      width: DSHelper.width ,
+      color: DSColors.success,
+      child: Text(controller.favoritesList.toString()),
+    );
   }
 }

@@ -2,16 +2,28 @@ import 'package:flutter/services.dart';
 import 'package:marvel_heroes_commons/marvel_heroes_commons.dart';
 import 'package:marvel_heroes_core/marvel_heroes_core.dart';
 import 'package:marvel_heroes_home/src/presentation/pages/hero_details/hero_details_controller.dart';
-import 'package:marvel_heroes_home/src/presentation/widgets/shimmer_list.dart';
 
-class HeroDetailsPage extends GetView<HeroDetailsController> {
-  const HeroDetailsPage({super.key});
+// ignore: must_be_immutable
+class HeroDetailsPage extends StatelessWidget {
+  HeroDetailsController controller = HeroDetailsController(
+    homeStore: Get.find(),
+    getHeroDetailByTypeUseCase: Get.find(),
+    getRelatedHeroesUsecase: Get.find(),
+  );
+
+  HeroDetailsPage({super.key}) {
+    controller.onInit();
+  }
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: controller.tabHeaderTitles.length,
       child: Scaffold(
+        floatingActionButton: DSCircularButton(
+          onTap: () => BottomSheetWidget.show(child: _getBottomSheetDetails()),
+          button: DSCircularButtonNavigatorEnum.info,
+        ),
         appBar: AppBar(
           systemOverlayStyle: const SystemUiOverlayStyle(
             statusBarColor: DSColors.white,
@@ -22,7 +34,7 @@ class HeroDetailsPage extends GetView<HeroDetailsController> {
           ),
           backgroundColor: DSColors.primary,
           title: Text(
-            controller.selectedHero.name ?? '',
+            controller.selectedHero?.name ?? '',
             overflow: TextOverflow.ellipsis,
             style: DSTextStyle.body.copyWith(
               color: DSColors.white,
@@ -33,18 +45,49 @@ class HeroDetailsPage extends GetView<HeroDetailsController> {
         backgroundColor: DSColors.background,
         body: Obx(
           () => controller.isLoading.value
-              ? const ShimmerListWidget(itens: 5)
+              ? _getShimmerDetails()
               : controller.showError.value
                   ? DefaultErrorWidget(
-                      tryAgainPressed: () {},
+                      tryAgainPressed: controller.loadHeroDetails,
                     )
-                  : _getFavoritesContent(),
+                  : _getDetailsContent(),
         ),
       ),
     );
   }
 
-  Widget _getFavoritesContent() {
+  Widget _getBottomSheetDetails() {
+    return SafeArea(
+      child: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.only(bottom: DSHeight.h_8.value),
+            child: Text(
+              'Detalhes',
+              style: DSTextStyle.subtitle.copyWith(
+                color: DSColors.text,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: DSHeight.h_32.value),
+            child: Text(
+              controller.selectedHero?.desc == ''
+                  ? 'Não tem descrição.'
+                  : controller.selectedHero?.desc ?? 'Não tem descrição.',
+              textAlign: TextAlign.justify,
+              style: DSTextStyle.body2.copyWith(
+                color: DSColors.text,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _getDetailsContent() {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,7 +97,7 @@ class HeroDetailsPage extends GetView<HeroDetailsController> {
             width: DSHelper.width,
             color: DSColors.white,
             child: Image.network(
-              controller.selectedHero.imageUrl ?? '',
+              controller.selectedHero?.imageUrl ?? '',
               width: DSHelper.width * 0.44,
               height: DSHelper.height * 0.2,
               fit: BoxFit.cover,
@@ -71,101 +114,166 @@ class HeroDetailsPage extends GetView<HeroDetailsController> {
               children: [...controller.tabContent],
             ),
           ),
-          Container(
-            alignment: Alignment.center,
-            color: DSColors.secondary,
-            width: DSHelper.width,
-            height: DSHeight.h_48.value,
-            child: Text(
-              'Personagens relacionados',
-              textAlign: TextAlign.center,
-              style: DSTextStyle.body.copyWith(
-                color: DSColors.white,
-                fontWeight: FontWeight.bold,
-              ),
+          _getRelatedHeroesWidget(),
+        ],
+      ),
+    );
+  }
+
+  Widget _getRelatedHeroesWidget() {
+    return Column(
+      children: [
+        Container(
+          alignment: Alignment.center,
+          color: DSColors.secondary,
+          width: DSHelper.width,
+          height: DSHeight.h_48.value,
+          child: Text(
+            'Personagens relacionados',
+            textAlign: TextAlign.center,
+            style: DSTextStyle.body.copyWith(
+              color: DSColors.white,
+              fontWeight: FontWeight.bold,
             ),
           ),
-          Container(
-            height: DSHelper.height * 0.45,
-            color: DSColors.secondary,
-            child: Scrollbar(
-              child: ListView.builder(
-                itemCount: 20,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    width: DSHelper.width * 0.5,
-                    margin: EdgeInsets.symmetric(
-                      vertical: DSHeight.h_12.value,
-                      horizontal: DSHeight.h_16.value,
-                    ),
-                    decoration: BoxDecoration(
-                      color: DSColors.white,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Column(
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: DSImages.getImage(
-                            DSPngImagesEnum.error,
-                            fit: BoxFit.scaleDown,
-                            size: DSHelper.height * 0.35,
-                          ),
-                          // Image.network(
-                          //   image ?? '',
-                          //   width: DSHelper.width * 0.5,
-                          //   fit: BoxFit.fill,
-                          // ),
-                        ),
-                        Flexible(
-                          child: Padding(
-                            padding: EdgeInsets.all(DSHeight.h_8.value),
-                            child: Text(
-                              'teste',
-                              textAlign: TextAlign.center,
-                              style: DSTextStyle.footnote.copyWith(
-                                color: DSColors.black,
-                                fontWeight: FontWeight.bold,
+        ),
+        Obx(
+          () => controller.isLoadingRelatedHeroes.value
+              ? _getRelatedHeroesShimmer()
+              : controller.relatedHeroes.isEmpty
+                  ? controller.getNoInformationWidget()
+                  : Container(
+                      height: DSHelper.height * 0.35,
+                      color: DSColors.secondary,
+                      child: Scrollbar(
+                        child: ListView.builder(
+                          itemCount: controller.relatedHeroes.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (BuildContext context, int index) {
+                            final hero = controller.relatedHeroes[index];
+                            final name = hero.name ?? '';
+                            final image = hero.imageUrl ?? '';
+                            return GestureDetector(
+                              onTap: () => controller.loadRelatedHero(hero),
+                              child: Container(
+                                width: DSHelper.width * 0.35,
+                                margin: EdgeInsets.symmetric(
+                                  vertical: DSHeight.h_12.value,
+                                  horizontal: DSHeight.h_16.value,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: DSColors.white,
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(12),
+                                      child: Image.network(
+                                        image,
+                                        height: DSHelper.height * 0.27,
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
+                                    Flexible(
+                                      child: Padding(
+                                        padding: EdgeInsets.all(
+                                          DSHeight.h_8.value,
+                                        ),
+                                        child: Text(
+                                          name,
+                                          textAlign: TextAlign.center,
+                                          style: DSTextStyle.footnote.copyWith(
+                                            color: DSColors.black,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ),
+                            );
+                          },
                         ),
-                      ],
+                      ),
                     ),
-                  );
-                },
+        ),
+      ],
+    );
+  }
+
+  Widget _getShimmerDetails() {
+    return Padding(
+      padding: EdgeInsets.all(DsWidth.w_8.value),
+      child: Column(
+        children: [
+          Shimmer.fromColors(
+            enabled: true,
+            baseColor: DSColors.tertiary,
+            highlightColor: DSColors.divider,
+            child: Container(
+              height: DSHelper.height * 0.2,
+              decoration: BoxDecoration(
+                color: DSColors.tertiary,
+                borderRadius: BorderRadius.circular(DSHeight.h_12.value),
               ),
             ),
           ),
-          Container(
-            alignment: Alignment.center,
-            color: DSColors.tertiary,
-            width: DSHelper.width,
-            height: DSHeight.h_48.value,
-            child: Text(
-              'Detalhes',
-              textAlign: TextAlign.center,
-              style: DSTextStyle.body.copyWith(
-                color: DSColors.text,
-                fontWeight: FontWeight.bold,
+          SizedBox(height: DSHeight.h_24.value),
+          Shimmer.fromColors(
+            enabled: true,
+            baseColor: DSColors.tertiary,
+            highlightColor: DSColors.divider,
+            child: Container(
+              height: DSHelper.height * 0.5,
+              decoration: BoxDecoration(
+                color: DSColors.tertiary,
+                borderRadius: BorderRadius.circular(DSHeight.h_12.value),
               ),
             ),
           ),
-          Container(
-            height: DSHelper.height * 0.35,
-            width: DSHelper.width,
-            color: DSColors.tertiary,
-            child: Padding(
-              padding: EdgeInsets.all(DSHeight.h_24.value),
-              child: Text(
-                controller.selectedHero.desc == ''
-                    ? 'Não tem descrição.'
-                    : controller.selectedHero.desc ?? 'Não tem descrição.',
-                textAlign: TextAlign.justify,
-                style: DSTextStyle.body2.copyWith(
-                  color: DSColors.text,
-                  fontWeight: FontWeight.bold,
+        ],
+      ),
+    );
+  }
+
+  Widget _getRelatedHeroesShimmer() {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: DsWidth.w_24.value,
+      ),
+      child: Row(
+        children: [
+          Shimmer.fromColors(
+            enabled: true,
+            baseColor: DSColors.tertiary,
+            highlightColor: DSColors.divider,
+            child: Container(
+              height: DSHelper.height * 0.3,
+              width: DSHelper.width * 0.3,
+              decoration: BoxDecoration(
+                color: DSColors.tertiary,
+                borderRadius: BorderRadius.circular(
+                  DSHeight.h_12.value,
+                ),
+              ),
+            ),
+          ),
+          SizedBox(width: DsWidth.w_24.value),
+          Shimmer.fromColors(
+            enabled: true,
+            baseColor: DSColors.tertiary,
+            highlightColor: DSColors.divider,
+            child: Container(
+              height: DSHelper.height * 0.3,
+              width: DSHelper.width * 0.3,
+              decoration: BoxDecoration(
+                color: DSColors.tertiary,
+                borderRadius: BorderRadius.circular(
+                  DSHeight.h_12.value,
                 ),
               ),
             ),

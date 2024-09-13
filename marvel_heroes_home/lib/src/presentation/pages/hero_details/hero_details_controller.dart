@@ -3,12 +3,16 @@ import 'package:marvel_heroes_core/marvel_heroes_core.dart';
 import 'package:marvel_heroes_home/src/domain/entities/hero_entity.dart';
 import 'package:marvel_heroes_home/src/domain/entities/heroes_response_entity.dart';
 import 'package:marvel_heroes_home/src/domain/use_cases/get_hero_detail_by_type_use_case.dart';
+import 'package:marvel_heroes_home/src/domain/use_cases/get_related_heroes_use_case.dart';
 import 'package:marvel_heroes_home/src/infra/data_sources/home_datasource.dart';
+import 'package:marvel_heroes_home/src/presentation/pages/hero_details/widgets/comics_tab_widget.dart';
+import 'package:marvel_heroes_home/src/presentation/pages/hero_details/widgets/series_tab_widget.dart';
 import 'package:marvel_heroes_home/src/presentation/stores/home_store.dart';
 
 class HeroDetailsController extends BaseController
     with GetTickerProviderStateMixin {
   RxBool isLoading = RxBool(true);
+  RxBool isLoadingRelatedHeroes = RxBool(true);
   RxBool showError = RxBool(false);
   RxInt tabIndex = RxInt(0);
 
@@ -17,24 +21,29 @@ class HeroDetailsController extends BaseController
   List<Widget> tabContent = [];
 
   final HomeStore _homeStore;
-  late HeroEntity selectedHero;
+  HeroEntity? selectedHero;
 
   HeroesResponseEntity? series;
   HeroesResponseEntity? events;
   HeroesResponseEntity? comics;
+  List<int> comicsIds = [];
+  List<HeroEntity> relatedHeroes = [];
 
   final IGetHeroeDetailByTypeUsecase _getHeroeDetailByTypeUsecase;
+  final IGetRelatedHeroesUsecase _getRelatedHeroesUsecase;
 
   HeroDetailsController({
     required HomeStore homeStore,
     required IGetHeroeDetailByTypeUsecase getHeroDetailByTypeUseCase,
+    required IGetRelatedHeroesUsecase getRelatedHeroesUsecase,
   })  : _homeStore = homeStore,
-        _getHeroeDetailByTypeUsecase = getHeroDetailByTypeUseCase;
+        _getHeroeDetailByTypeUsecase = getHeroDetailByTypeUseCase,
+        _getRelatedHeroesUsecase = getRelatedHeroesUsecase;
 
   @override
   void onInit() {
     super.onInit();
-    _loadHeroDetails();
+    loadHeroDetails();
   }
 
   @override
@@ -44,7 +53,8 @@ class HeroDetailsController extends BaseController
     super.onClose();
   }
 
-  void _loadHeroDetails() async {
+  void loadHeroDetails() async {
+    isLoading(true);
     try {
       if (_homeStore.selectedHero != null) {
         selectedHero = _homeStore.selectedHero!;
@@ -54,6 +64,7 @@ class HeroDetailsController extends BaseController
       events = await _fetchTabItemWhenSelected(type: DetailTypeEnum.events);
       comics = await _fetchTabItemWhenSelected(type: DetailTypeEnum.comics);
 
+      _setupComicsList();
       _setupTabs();
       _setupTabBar();
     } catch (e) {
@@ -64,20 +75,49 @@ class HeroDetailsController extends BaseController
     }
   }
 
+  void _setupComicsList() {
+    comics?.heroes.map((value) {
+      comicsIds.add(value.id);
+    }).toList();
+    if (comicsIds.length >= 3) {
+      comicsIds = comicsIds.sublist(0, 3);
+    }
+    _fetchRelatedHeroes();
+  }
+
+  void _fetchRelatedHeroes() async {
+    try {
+      for (var comicId in comicsIds) {
+        HeroesResponseEntity response =
+            await _getRelatedHeroesUsecase.call(comicId: comicId);
+        for (var hero in response.heroes) {
+          if (relatedHeroes.every((item) => item.id != hero.id)) {
+            relatedHeroes.add(hero);
+          }
+        }
+      }
+      relatedHeroes.removeWhere((hero) => hero.id == selectedHero?.id);
+    } catch (e) {
+      debugPrint(e.toString());
+    } finally {
+      isLoadingRelatedHeroes(false);
+    }
+  }
+
   void _setupTabs() {
     if (series != null) {
       tabHeaderTitles.add('Séries');
       tabContent.add(series!.heroes.isNotEmpty
-          ? _getContentTabSeries(series!)
-          : _getNoInformationWidget());
+          ? SeriesTabWidget(response: series!)
+          : getNoInformationWidget());
     }
 
     if (events != null) {
       tabHeaderTitles.add('Eventos');
       tabContent.add(
         events!.heroes.isNotEmpty
-            ? _getContentTabSeries(events!)
-            : _getNoInformationWidget(),
+            ? SeriesTabWidget(response: events!)
+            : getNoInformationWidget(),
       );
     }
 
@@ -85,8 +125,8 @@ class HeroDetailsController extends BaseController
       tabHeaderTitles.add('Quadrinhos');
       tabContent.add(
         comics!.heroes.isNotEmpty
-            ? _getContentTabComics(comics!)
-            : _getNoInformationWidget(),
+            ? ComicsTabWidget(response: comics!)
+            : getNoInformationWidget(),
       );
     }
   }
@@ -109,7 +149,7 @@ class HeroDetailsController extends BaseController
   }) async {
     try {
       return await _getHeroeDetailByTypeUsecase(
-        id: selectedHero.id,
+        id: selectedHero!.id,
         type: type,
       );
     } catch (e) {
@@ -119,105 +159,15 @@ class HeroDetailsController extends BaseController
     return null;
   }
 
-  Widget _getContentTabSeries(HeroesResponseEntity response) {
-    return Scrollbar(
-      child: ListView.builder(
-        itemCount: response.heroes.length,
-        scrollDirection: Axis.vertical,
-        itemBuilder: (BuildContext context, int index) {
-          final title = response.heroes[index].title;
-          final image = response.heroes[index].imageUrl;
-          return Container(
-            margin: EdgeInsets.symmetric(
-              vertical: DSHeight.h_12.value,
-              horizontal: DSHeight.h_16.value,
-            ),
-            decoration: BoxDecoration(
-              color: DSColors.white,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Row(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Image.network(
-                    image ?? '',
-                    height: DSHeight.h_112.value,
-                    width: DsWidth.w_112.value,
-                    fit: BoxFit.fill,
-                  ),
-                ),
-                Flexible(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: DSHeight.h_8.value,
-                    ),
-                    child: Text(
-                      title ?? '',
-                      textAlign: TextAlign.start,
-                      style: DSTextStyle.body.copyWith(
-                        color: DSColors.black,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-      ),
+  void loadRelatedHero(HeroEntity hero) {
+    _homeStore.selectedHero = hero;
+    Get.toNamed(
+      AppRoutes.home.heroDetails,
+      preventDuplicates: false,
     );
   }
 
-  Widget _getContentTabComics(HeroesResponseEntity response) {
-    return Scrollbar(
-      child: ListView.builder(
-        itemCount: response.heroes.length,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (BuildContext context, int index) {
-          final title = response.heroes[index].title;
-          final image = response.heroes[index].imageUrl;
-          return Container(
-            width: DSHelper.width * 0.5,
-            margin: EdgeInsets.symmetric(
-              vertical: DSHeight.h_12.value,
-              horizontal: DSHeight.h_16.value,
-            ),
-            decoration: BoxDecoration(
-              color: DSColors.white,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Column(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Image.network(
-                    image ?? '',
-                    width: DSHelper.width * 0.5,
-                    height: DSHelper.height * 0.35,
-                    fit: BoxFit.fill,
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: DSHeight.h_8.value),
-                  child: Text(
-                    title ?? '',
-                    textAlign: TextAlign.center,
-                    style: DSTextStyle.footnote.copyWith(
-                      color: DSColors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-      ),
-    );
-  }
-
-  Widget _getNoInformationWidget() {
+  Widget getNoInformationWidget() {
     return DefaultErrorWidget(
       title: 'Sem informações',
       subTitle:

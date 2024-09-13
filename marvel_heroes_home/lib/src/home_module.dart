@@ -17,7 +17,7 @@ abstract class HomeModule {
     ),
     GetPage(
       name: AppRoutes.home.heroDetails,
-      page: () => const HeroDetailsPage(),
+      page: () => HeroDetailsPage(),
       binding: HeroDetailsBindings(),
     ),
     GetPage(

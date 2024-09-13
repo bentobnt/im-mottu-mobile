@@ -13,6 +13,7 @@ class HomeController extends BaseController {
   RxBool showSearchBar = RxBool(false);
 
   List<HeroEntity> _heroesList = List.empty();
+  RxList<int> favoritesHeroesIds = RxList.empty();
   final RxList<HeroEntity> heroesListFiltered = RxList.empty();
 
   int numberOfHeroes = 0;
@@ -29,9 +30,10 @@ class HomeController extends BaseController {
         _homeStore = homeStore;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     scrollController.addListener(_loadMore);
+    await _fetchFavorites();
     _getHeroesList(0);
   }
 
@@ -50,11 +52,27 @@ class HomeController extends BaseController {
     }
   }
 
-  void scrollToBottom(bool bottom) {
-    if (bottom) {
-      scrollController.jumpTo(scrollController.position.maxScrollExtent - 200);
-    } else {
-      scrollController.jumpTo(0);
+  Future<void> _fetchFavorites() async {
+    try {
+      final localStorage = Get.find<ILocalStorageUseCase>();
+      favoritesHeroesIds.value =
+          await localStorage.get('favorites_heroes_ids') ?? [];
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  void handleFavoriteButton({required bool add, required int heroId}) async {
+    try {
+      add
+          ? favoritesHeroesIds.add(heroId)
+          : favoritesHeroesIds.removeWhere((id) => id == heroId);
+
+      final localStorage = Get.find<ILocalStorageUseCase>();
+      await localStorage.set('favorites_heroes_ids', favoritesHeroesIds.value);
+      print(await localStorage.get('favorites_heroes_ids'));
+    } catch (e) {
+      debugPrint(e.toString());
     }
   }
 
@@ -70,6 +88,14 @@ class HomeController extends BaseController {
       isLoading(false);
       fetchNewPage(false);
     });
+  }
+
+  void scrollToBottom(bool bottom) {
+    if (bottom) {
+      scrollController.jumpTo(scrollController.position.maxScrollExtent - 200);
+    } else {
+      scrollController.jumpTo(0);
+    }
   }
 
   void search(String query) {
