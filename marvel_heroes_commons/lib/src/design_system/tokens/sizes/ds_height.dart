@@ -1,5 +1,4 @@
 import 'package:marvel_heroes_commons/marvel_heroes_commons.dart';
-import 'package:marvel_heroes_commons/src/design_system/tokens/sizes/sizes.dart';
 
 class DSHeight {
   static DSHeight h_0 = DSHeight._(DSSizesHeights.dsh_0);

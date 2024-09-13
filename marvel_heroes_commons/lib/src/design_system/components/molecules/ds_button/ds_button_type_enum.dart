@@ -8,11 +8,11 @@ enum DSButtonTypeEnum {
   DSColor getDSTextColor(bool isActive) {
     switch (this) {
       case DSButtonTypeEnum.primary:
-        return isActive ? DSColors.primary : DSColors.desactivateButton;
+        return isActive ? DSColors.primary : DSColors.primaryDesactivated;
       case DSButtonTypeEnum.secondary:
-        return isActive ? DSColors.primary : DSColors.desactivateButton;
+        return isActive ? DSColors.primary : DSColors.primaryDesactivated;
       case DSButtonTypeEnum.tertiary:
-        return isActive ? DSColors.primary : DSColors.desactivateButton;
+        return isActive ? DSColors.tertiary : DSColors.tertiaryDesactivated;
     }
   }
 
@@ -21,11 +21,11 @@ enum DSButtonTypeEnum {
   ) {
     switch (this) {
       case DSButtonTypeEnum.primary:
-        return isActive ? DSColors.primary : DSColors.desactivateButton;
+        return isActive ? DSColors.primary : DSColors.primaryDesactivated;
       case DSButtonTypeEnum.secondary:
         return DSColors.transparent;
       case DSButtonTypeEnum.tertiary:
-        return isActive ? DSColors.primary : DSColors.desactivateButton;
+        return isActive ? DSColors.tertiary : DSColors.tertiaryDesactivated;
     }
   }
 
@@ -34,11 +34,11 @@ enum DSButtonTypeEnum {
   ) {
     switch (this) {
       case DSButtonTypeEnum.primary:
-        return isActive ? DSColors.primary : DSColors.desactivateButton;
+        return isActive ? DSColors.primary : DSColors.primaryDesactivated;
       case DSButtonTypeEnum.secondary:
-        return isActive ? DSColors.primary : DSColors.desactivateButton;
+        return isActive ? DSColors.primary : DSColors.primaryDesactivated;
       case DSButtonTypeEnum.tertiary:
-        return isActive ? DSColors.primary : DSColors.desactivateButton;
+        return isActive ? DSColors.tertiary : DSColors.tertiaryDesactivated;
     }
   }
 
@@ -49,7 +49,7 @@ enum DSButtonTypeEnum {
       case DSButtonTypeEnum.secondary:
         return DSColors.primary;
       case DSButtonTypeEnum.tertiary:
-        return DSColors.primary;
+        return DSColors.tertiary;
     }
   }
 }

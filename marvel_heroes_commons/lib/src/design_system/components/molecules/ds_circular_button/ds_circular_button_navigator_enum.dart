@@ -1,15 +1,18 @@
 import 'package:marvel_heroes_commons/marvel_heroes_commons.dart';
 
 enum DSCircularButtonNavigatorEnum {
-  arrowRight,
-  arrowLeft;
+  arrowDown,
+  arrowUp,
+  info;
 
   DSSvgIconsEnum getIcon() {
     switch (this) {
-      case DSCircularButtonNavigatorEnum.arrowRight:
-        return DSSvgIconsEnum.search;
-      case DSCircularButtonNavigatorEnum.arrowLeft:
-        return DSSvgIconsEnum.search;
+      case DSCircularButtonNavigatorEnum.arrowUp:
+        return DSSvgIconsEnum.arrowUp;
+      case DSCircularButtonNavigatorEnum.arrowDown:
+        return DSSvgIconsEnum.arrowDown;
+      case DSCircularButtonNavigatorEnum.info:
+        return DSSvgIconsEnum.info;
     }
   }
 }

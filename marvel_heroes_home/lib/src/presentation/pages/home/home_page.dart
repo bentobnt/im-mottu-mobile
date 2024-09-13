@@ -2,7 +2,6 @@ import 'package:flutter/services.dart';
 import 'package:marvel_heroes_commons/marvel_heroes_commons.dart';
 import 'package:marvel_heroes_core/marvel_heroes_core.dart';
 import 'package:marvel_heroes_home/src/presentation/pages/home/home_controller.dart';
-import 'package:marvel_heroes_home/src/presentation/widgets/shimmer_list.dart';
 
 class HomePage extends GetView<HomeController> {
   const HomePage({super.key});
@@ -48,7 +47,8 @@ class HomePage extends GetView<HomeController> {
                         controller.showSearchBar.value = false;
                         controller.search('');
                       },
-                    ))
+                    ),
+                  )
                 : Padding(
                     padding: EdgeInsets.only(right: DsWidth.w_24.value),
                     child: GestureDetector(
@@ -145,6 +145,7 @@ class HomePage extends GetView<HomeController> {
                     itemCount: controller.heroesListFiltered.length,
                     controller: controller.scrollController,
                     itemBuilder: (BuildContext context, int index) {
+                      final id = controller.heroesListFiltered[index].id;
                       final name = controller.heroesListFiltered[index].name;
                       final url = controller.heroesListFiltered[index].imageUrl;
                       return GestureDetector(
@@ -160,28 +161,51 @@ class HomePage extends GetView<HomeController> {
                             color: DSColors.primary,
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                          child: Stack(
+                            alignment: AlignmentDirectional.topEnd,
                             children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(12),
-                                child: Image.network(
-                                  url ?? '',
-                                  width: DSHelper.width * 0.44,
-                                  height: DSHelper.height * 0.2,
-                                  fit: BoxFit.fill,
-                                ),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(12),
+                                    child: Image.network(
+                                      url ?? '',
+                                      width: DSHelper.width * 0.44,
+                                      height: DSHelper.height * 0.2,
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: DsWidth.w_4.value,
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      name ?? '',
+                                      textAlign: TextAlign.center,
+                                      style: DSTextStyle.body.copyWith(
+                                        color: DSColors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              SizedBox(
-                                width: DsWidth.w_4.value,
-                              ),
-                              Expanded(
-                                child: Text(
-                                  name ?? '',
-                                  textAlign: TextAlign.center,
-                                  style: DSTextStyle.body.copyWith(
-                                    color: DSColors.white,
-                                    fontWeight: FontWeight.bold,
+                              Padding(
+                                padding: EdgeInsets.all(DSHeight.h_12.value),
+                                child: GestureDetector(
+                                  child: Obx(
+                                    () => DSSvgIcons.getIcon(
+                                      controller.favoritesHeroesIds.contains(id)
+                                          ? DSSvgIconsEnum.favoriteCheck
+                                          : DSSvgIconsEnum.favorite,
+                                      color: DSColors.white,
+                                    ),
+                                  ),
+                                  onTap: () => controller.handleFavoriteButton(
+                                    add: !controller.favoritesHeroesIds
+                                        .contains(id),
+                                    heroId: id,
                                   ),
                                 ),
                               ),
@@ -197,9 +221,7 @@ class HomePage extends GetView<HomeController> {
           ),
           Obx(
             () => controller.fetchNewPage.value
-                ? const CircularProgressIndicator(
-                    color: DSColors.secondary,
-                  )
+                ? const DSLoading(size: DSLoadingSizeEnum.big)
                 : const SizedBox.shrink(),
           ),
         ],

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:marvel_heroes_commons/marvel_heroes_commons.dart';
 
-enum DSPngImagesEnum { heroes, ironMan, error, noInformation }
+enum DSPngImagesEnum { heroes, ironMan, error, noInformation, loading }
 
 class DSImages {
   static const _images = {
@@ -9,6 +9,7 @@ class DSImages {
     DSPngImagesEnum.ironMan: 'assets/images/iron-man.png',
     DSPngImagesEnum.error: 'assets/images/error.png',
     DSPngImagesEnum.noInformation: 'assets/images/no-information.png',
+    DSPngImagesEnum.loading: 'assets/images/shield-loading.gif',
   };
 
   static Image getImage(DSPngImagesEnum type, {double? size, BoxFit? fit}) {

@@ -22,15 +22,17 @@ class DSColor extends Color {
 
 abstract class DSColors {
   static const DSColor primary = DSColor(0XFFE23636);
+  static const DSColor primaryDesactivated = DSColor(0XFFF5A3A3);
   static const DSColor secondary = DSColor(0XFF1A2A6A);
+  static const DSColor secondaryDesactivated = DSColor(0XFF4D5C96);
   static const DSColor tertiary = DSColor(0XFFF5C300);
+  static const DSColor tertiaryDesactivated = DSColor(0XFFFBE28C);
 
   static const DSColor divider = DSColor(0XFFD8D8D8);
   static const DSColor background = DSColor(0XFFF0F0F5);
   static const DSColor text = DSColor(0XFF333333);
 
   static const DSColor success = DSColor(0XFF3C9F40);
-  static const DSColor desactivateButton = DSColor(0XFFF5A3A3);
 
   static const DSColor black = DSColor(0XFF000000);
   static const DSColor white = DSColor(0XFFFFFFFF);

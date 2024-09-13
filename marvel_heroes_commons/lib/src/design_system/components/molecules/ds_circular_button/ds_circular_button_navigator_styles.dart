@@ -10,6 +10,6 @@ abstract class DSCircularButtonNavigatorStyles {
   }
 
   static DSColor getIconColor(bool isActive) {
-    return isActive ? DSColors.primary : DSColors.transparent;
+    return isActive ? DSColors.white : DSColors.transparent;
   }
 }

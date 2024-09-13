@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import '../../marvel_heroes_commons.dart';
 
@@ -56,7 +57,7 @@ class DefaultErrorWidget extends StatelessWidget {
             visible: tryAgainPressed != null,
             child: DSButton(
               text: 'Tentar novamente',
-              onTap: tryAgainPressed,
+              onTap: tryAgainPressed ?? () {},
               type: DSButtonTypeEnum.secondary,
               size: DSButtonSizeEnum.big,
             ),
