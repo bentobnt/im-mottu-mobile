@@ -8,3 +8,4 @@ export 'package:flutter/material.dart'
 export 'src/core/core.dart';
 export 'src/domain/domain.dart';
 export 'src/provider/provider.dart';
+export 'src/data/data.dart';
