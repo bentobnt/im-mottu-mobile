@@ -67,7 +67,7 @@ class HomePage extends GetView<HomeController> {
             ? const ShimmerListWidget(itens: 5)
             : controller.showError.value
                 ? DefaultErrorWidget(
-                    tryAgainPressed: () {},
+                    tryAgainPressed: controller.getHeroesList,
                   )
                 : _getHomeContent(),
       ),
@@ -138,6 +138,7 @@ class HomePage extends GetView<HomeController> {
                   ],
                 ),
               ),
+              Divider(height: DSHeight.h_1.value, color: DSColors.divider),
               Expanded(
                 child: Scrollbar(
                   controller: controller.scrollController,
@@ -196,15 +197,16 @@ class HomePage extends GetView<HomeController> {
                                 child: GestureDetector(
                                   child: Obx(
                                     () => DSSvgIcons.getIcon(
-                                      controller.favoritesHeroesIds.contains(id)
+                                      controller.listHeroesIds
+                                              .contains(id.toString())
                                           ? DSSvgIconsEnum.favoriteCheck
                                           : DSSvgIconsEnum.favorite,
                                       color: DSColors.white,
                                     ),
                                   ),
                                   onTap: () => controller.handleFavoriteButton(
-                                    add: !controller.favoritesHeroesIds
-                                        .contains(id),
+                                    add: !controller.listHeroesIds
+                                        .contains(id.toString()),
                                     heroId: id,
                                   ),
                                 ),

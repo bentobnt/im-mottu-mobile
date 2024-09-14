@@ -1,19 +1,15 @@
 import 'dart:convert';
-import 'package:dio/dio.dart';
-import '../../domain/use_cases/local_storage_use_case.dart';
+import 'package:marvel_heroes_core/marvel_heroes_core.dart';
 
 class CacheInterceptor extends Interceptor {
-  final ILocalStorageUseCase _localStorage;
-
-  CacheInterceptor({
-    required ILocalStorageUseCase localStorage,
-  }) : _localStorage = localStorage;
+  CacheInterceptor();
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) async {
     if (response.requestOptions.method.toUpperCase() == 'GET') {
       String data = jsonEncode(response.data);
-      await _localStorage.set(response.requestOptions.path, data);
+      final pref = await SharedPreferences.getInstance();
+      await pref.setString(response.requestOptions.path, data);
     }
     super.onResponse(response, handler);
   }
@@ -27,7 +23,8 @@ class CacheInterceptor extends Interceptor {
     ];
 
     if (networkErros.contains(err.type)) {
-      String? body = await _localStorage.get(err.requestOptions.path);
+      final pref = await SharedPreferences.getInstance();
+      String? body = await pref.getString(err.requestOptions.path);
       if (body != null && body.isNotEmpty) {
         dynamic data = jsonDecode(body);
         handler.resolve(

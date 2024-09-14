@@ -9,7 +9,8 @@ enum DSSvgIconsEnum {
   close,
   arrowDown,
   arrowUp,
-  info
+  info,
+  delete,
 }
 
 abstract class DSSvgIcons {
@@ -22,6 +23,7 @@ abstract class DSSvgIcons {
     DSSvgIconsEnum.arrowDown: 'assets/svg/arrow_down.svg',
     DSSvgIconsEnum.arrowUp: 'assets/svg/arrow_up.svg',
     DSSvgIconsEnum.info: 'assets/svg/info.svg',
+    DSSvgIconsEnum.delete: 'assets/svg/delete.svg',
   };
 
   static SvgPicture getIcon(DSSvgIconsEnum type,

@@ -13,7 +13,6 @@ class HomeController extends BaseController {
   RxBool showSearchBar = RxBool(false);
 
   List<HeroEntity> _heroesList = List.empty();
-  RxList<int> favoritesHeroesIds = RxList.empty();
   final RxList<HeroEntity> heroesListFiltered = RxList.empty();
 
   int numberOfHeroes = 0;
@@ -29,12 +28,15 @@ class HomeController extends BaseController {
   })  : _getHeroesListUsecase = getHeroesListUsecase,
         _homeStore = homeStore;
 
+  RxList<String> get listHeroesIds => _homeStore.favoritesHeroesIds;
+
   @override
   void onInit() async {
     super.onInit();
     scrollController.addListener(_loadMore);
+
     await _fetchFavorites();
-    _getHeroesList(0);
+    getHeroesList();
   }
 
   @override
@@ -48,15 +50,15 @@ class HomeController extends BaseController {
         scrollController.position.maxScrollExtent) {
       fetchNewPage.value = true;
       pageNumber++;
-      _getHeroesList(scrollController.position.pixels);
+      getHeroesList();
     }
   }
 
   Future<void> _fetchFavorites() async {
     try {
-      final localStorage = Get.find<ILocalStorageUseCase>();
-      favoritesHeroesIds.value =
-          await localStorage.get('favorites_heroes_ids') ?? [];
+      final pref = await SharedPreferences.getInstance();
+      List<String> savedList = pref.getStringList('favorites_heroes_ids') ?? [];
+      _homeStore.favoritesHeroesIds.value = savedList;
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -65,18 +67,22 @@ class HomeController extends BaseController {
   void handleFavoriteButton({required bool add, required int heroId}) async {
     try {
       add
-          ? favoritesHeroesIds.add(heroId)
-          : favoritesHeroesIds.removeWhere((id) => id == heroId);
+          ? _homeStore.favoritesHeroesIds.add(heroId.toString())
+          : _homeStore.favoritesHeroesIds
+              .removeWhere((id) => id == heroId.toString());
 
-      final localStorage = Get.find<ILocalStorageUseCase>();
-      await localStorage.set('favorites_heroes_ids', favoritesHeroesIds.value);
-      print(await localStorage.get('favorites_heroes_ids'));
+      List<String> stringList = _homeStore.favoritesHeroesIds
+          .map((element) => element.toString())
+          .toList();
+      final pref = await SharedPreferences.getInstance();
+
+      await pref.setStringList('favorites_heroes_ids', stringList);
     } catch (e) {
       debugPrint(e.toString());
     }
   }
 
-  Future<void> _getHeroesList(double? jumpToScrollPosition) async {
+  Future<void> getHeroesList() async {
     int offset = pageNumber * limitPerPage;
     _getHeroesListUsecase(offset: offset).then((response) {
       _heroesList += response.heroes;

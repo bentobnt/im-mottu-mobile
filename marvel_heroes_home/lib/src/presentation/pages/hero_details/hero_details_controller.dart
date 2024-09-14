@@ -53,7 +53,7 @@ class HeroDetailsController extends BaseController
     super.onClose();
   }
 
-  void loadHeroDetails() async {
+  Future<void> loadHeroDetails() async {
     isLoading(true);
     try {
       if (_homeStore.selectedHero != null) {

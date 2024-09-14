@@ -12,12 +12,13 @@ class SplashPage extends GetView<SplashController> {
     return Scaffold(
       body: Container(
         alignment: Alignment.center,
-        color: DSColors.secondary,
+        color: DSColors.primary,
         height: DSHelper.height,
         width: DSHelper.width,
         child: DSImages.getImage(
-          DSPngImagesEnum.ironMan,
-          size: DSSizesWidths.dsw_112,
+          DSPngImagesEnum.logo,
+          size: DSSizesWidths.dsw_224,
+          color: DSColors.white,
         ),
       ),
     );
