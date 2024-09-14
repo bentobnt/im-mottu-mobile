@@ -7,7 +7,7 @@ class DefaultErrorWidget extends StatelessWidget {
   String? title;
   String? subTitle;
   DSPngImagesEnum? image;
-  final Function()? tryAgainPressed;
+  final Future Function()? tryAgainPressed;
 
   DefaultErrorWidget({
     this.tryAgainPressed,
@@ -57,7 +57,7 @@ class DefaultErrorWidget extends StatelessWidget {
             visible: tryAgainPressed != null,
             child: DSButton(
               text: 'Tentar novamente',
-              onTap: tryAgainPressed ?? () {},
+              onTap: tryAgainPressed ?? () async {},
               type: DSButtonTypeEnum.secondary,
               size: DSButtonSizeEnum.big,
             ),

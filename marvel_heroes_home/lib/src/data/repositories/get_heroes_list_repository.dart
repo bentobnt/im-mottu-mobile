@@ -10,7 +10,7 @@ class GetHeroesListRepository implements IGetHeroesListRepository {
   }) : _homeDataSource = homeDataSource;
 
   @override
-  Future<HeroesResponseEntity> getHeroesList({required int offset}) {
-    return _homeDataSource.getHeroesList(offset: offset);
+  Future<HeroesResponseEntity> getHeroesList({int? offset, int? id}) {
+    return _homeDataSource.getHeroesList(offset: offset, id: id);
   }
 }

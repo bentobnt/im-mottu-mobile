@@ -77,9 +77,7 @@ class DioProvider implements IDioProvider {
     _dio.options.headers.clear();
     _dio.interceptors.clear();
     _dio.interceptors.add(
-      CacheInterceptor(
-        localStorage: Get.find(),
-      ),
+      CacheInterceptor(),
     );
   }
 

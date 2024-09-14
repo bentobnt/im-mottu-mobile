@@ -21,14 +21,19 @@ class HomeDataSource implements IHomeDataSource {
   }) : _httpProvider = httpProvider;
 
   @override
-  Future<HeroesResponseModel> getHeroesList({required int offset}) async {
+  Future<HeroesResponseModel> getHeroesList({int? offset, int? id}) async {
     try {
+      final url = id != null ? '/characters/$id' : '/characters';
+      Map<String, dynamic> parameters = id != null
+          ? {}
+          : {
+              'offset': offset,
+              'limit': 100,
+            };
+
       final request = HttpRequest(
-        url: '/characters',
-        queryParameters: {
-          'offset': offset,
-          'limit': 100,
-        },
+        url: url,
+        queryParameters: parameters,
       );
 
       final response = await _httpProvider.get(request);

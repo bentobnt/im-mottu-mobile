@@ -45,13 +45,14 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
   }
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
     switch (state) {
       case AppLifecycleState.detached:
-        final localStorage = Get.find<ILocalStorageUseCase>();
-        localStorage.clearAll();
+        final pref = await SharedPreferences.getInstance();
+        pref.clear();
         break;
       case AppLifecycleState.paused:
+        print('paused');
         break;
       default:
     }

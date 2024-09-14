@@ -31,7 +31,7 @@ class FavoritesPage extends GetView<FavoritesController> {
             ? const ShimmerListWidget(itens: 5)
             : controller.showError.value
                 ? DefaultErrorWidget(
-                    tryAgainPressed: () {},
+                    tryAgainPressed: controller.fetchFavorites,
                   )
                 : _getFavoritesContent(),
       ),
@@ -39,11 +39,74 @@ class FavoritesPage extends GetView<FavoritesController> {
   }
 
   Widget _getFavoritesContent() {
-    return Container(
-      height: 200,
-      width: DSHelper.width ,
-      color: DSColors.success,
-      child: Text(controller.favoritesList.toString()),
+    return Scrollbar(
+      controller: controller.scrollController,
+      child: ListView.builder(
+        itemCount: controller.heroesList.length,
+        controller: controller.scrollController,
+        itemBuilder: (BuildContext context, int index) {
+          final name = controller.heroesList[index].name;
+          final url = controller.heroesList[index].imageUrl;
+          return GestureDetector(
+            onTap: () => controller.goToDetailsPage(
+              selectedHero: controller.heroesList[index],
+            ),
+            child: Container(
+              margin: EdgeInsets.symmetric(
+                vertical: DSHeight.h_12.value,
+                horizontal: DSHeight.h_16.value,
+              ),
+              decoration: BoxDecoration(
+                color: DSColors.primary,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Stack(
+                alignment: AlignmentDirectional.topEnd,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Image.network(
+                          url ?? '',
+                          width: DSHelper.width * 0.44,
+                          height: DSHelper.height * 0.2,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                      SizedBox(
+                        width: DsWidth.w_4.value,
+                      ),
+                      Expanded(
+                        child: Text(
+                          name ?? '',
+                          textAlign: TextAlign.center,
+                          style: DSTextStyle.body.copyWith(
+                            color: DSColors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(DSHeight.h_12.value),
+                    child: GestureDetector(
+                      onTap: () =>
+                          controller.deleteHero(controller.heroesList[index]),
+                      child: DSSvgIcons.getIcon(
+                        DSSvgIconsEnum.delete,
+                        color: DSColors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }
