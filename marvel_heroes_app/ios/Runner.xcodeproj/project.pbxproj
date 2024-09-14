@@ -16,6 +16,7 @@
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
 		9CDDC92C19B5CE9F7771934F /* Pods_RunnerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 729C80AEBF1D015513891738 /* Pods_RunnerTests.framework */; };
 		C31B3B064B0B3E7AAE25293E /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B437D3B225DF061BA47A842F /* Pods_Runner.framework */; };
+		DC0595192C961BA900513370 /* FlutterHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0595182C961BA900513370 /* FlutterHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9A4C2A28A84AE34A8813C037 /* Pods-RunnerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.debug.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B437D3B225DF061BA47A842F /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC0595182C961BA900513370 /* FlutterHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlutterHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,7 +107,6 @@
 				8977D86BF9AAA80971CF73B1 /* Pods-RunnerTests.release.xcconfig */,
 				8C6B1D9054356119EB7ED51D /* Pods-RunnerTests.profile.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -152,6 +153,7 @@
 				1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */,
 				74858FAE1ED2DC5600515810 /* AppDelegate.swift */,
 				74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */,
+				DC0595182C961BA900513370 /* FlutterHelper.swift */,
 			);
 			path = Runner;
 			sourceTree = "<group>";
@@ -379,6 +381,7 @@
 			files = (
 				74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
+				DC0595192C961BA900513370 /* FlutterHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
