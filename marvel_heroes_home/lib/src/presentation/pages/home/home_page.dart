@@ -54,6 +54,8 @@ class HomePage extends GetView<HomeController> {
                     child: GestureDetector(
                       child: DSSvgIcons.getIcon(DSSvgIconsEnum.search),
                       onTap: () {
+                        // Testar Crashlytics - descomentar próxima linha
+                        //FirebaseCrashlytics.instance.crash();
                         controller.showSearchBar.value = true;
                       },
                     ),
@@ -150,6 +152,8 @@ class HomePage extends GetView<HomeController> {
                       final name = controller.heroesListFiltered[index].name;
                       final url = controller.heroesListFiltered[index].imageUrl;
                       return GestureDetector(
+                        // Testar Crashlytics - descomentar próxima linha
+                        //onTap: () => throw Exception(),
                         onTap: () => controller.goToDetailsPage(
                           selectedHero: controller.heroesListFiltered[index],
                         ),

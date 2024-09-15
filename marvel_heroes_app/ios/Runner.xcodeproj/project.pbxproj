@@ -17,6 +17,7 @@
 		9CDDC92C19B5CE9F7771934F /* Pods_RunnerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 729C80AEBF1D015513891738 /* Pods_RunnerTests.framework */; };
 		C31B3B064B0B3E7AAE25293E /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B437D3B225DF061BA47A842F /* Pods_Runner.framework */; };
 		DC0595192C961BA900513370 /* FlutterHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0595182C961BA900513370 /* FlutterHelper.swift */; };
+		DCD904162C972CF80070D46D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DCD904152C972CF80070D46D /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		9A4C2A28A84AE34A8813C037 /* Pods-RunnerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.debug.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B437D3B225DF061BA47A842F /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC0595182C961BA900513370 /* FlutterHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlutterHelper.swift; sourceTree = "<group>"; };
+		DCD904152C972CF80070D46D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +147,7 @@
 		97C146F01CF9000F007C117D /* Runner */ = {
 			isa = PBXGroup;
 			children = (
+				DCD904152C972CF80070D46D /* GoogleService-Info.plist */,
 				97C146FA1CF9000F007C117D /* Main.storyboard */,
 				97C146FD1CF9000F007C117D /* Assets.xcassets */,
 				97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */,
@@ -264,6 +267,7 @@
 			files = (
 				97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */,
 				3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */,
+				DCD904162C972CF80070D46D /* GoogleService-Info.plist in Resources */,
 				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,
 				97C146FC1CF9000F007C117D /* Main.storyboard in Resources */,
 			);
