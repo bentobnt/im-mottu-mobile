@@ -3,13 +3,11 @@ import 'package:marvel_heroes_commons/src/design_system/tokens/sizes/ds_button_h
 import 'package:marvel_heroes_commons/src/design_system/tokens/sizes/ds_button_width_size.dart';
 import 'package:marvel_heroes_core/marvel_heroes_core.dart';
 
-// ignore: must_be_immutable
-class DSButton extends StatefulWidget {
+class DSButton extends StatelessWidget {
   final Future Function() onTap;
   final DSButtonTypeEnum type;
   final DSButtonSizeEnum size;
   final DSSvgIconsEnum? icon;
-
   final String text;
   final bool isActiveButton;
 
@@ -23,40 +21,23 @@ class DSButton extends StatefulWidget {
     super.key,
   });
 
-  @override
-  State<DSButton> createState() => _DSButtonState();
-}
+  DSColor get backgroundColor => type.getBackgroundColor(isActiveButton);
 
-class _DSButtonState extends State<DSButton> {
-  DSColor get backgroundColor =>
-      widget.type.getBackgroundColor(widget.isActiveButton);
+  DSColor get borderColor => type.getBorderColor(isActiveButton);
 
-  DSColor get borderColor => widget.type.getBorderColor(widget.isActiveButton);
+  DSColor get textColor => type.getDSTextColor(isActiveButton);
 
-  DSColor get textColor => widget.type.getDSTextColor(widget.isActiveButton);
+  DSButtonWidth get buttonWidht => size.buttonWidht();
 
-  DSColor get circularProgressIndicatorColor =>
-      widget.type.getCircularProgressIndicatorColor();
+  DSButtonHeight get buttonHeigth => size.buttonHeight();
 
-  DSButtonWidth get buttonWidht => widget.size.buttonWidht();
-
-  DSButtonHeight get buttonHeigth => widget.size.buttonHeight();
-
-  DSTextStyle get style => widget.size.getTextStyle();
+  DSTextStyle get style => size.getTextStyle();
 
   @override
   Widget build(BuildContext context) {
-    bool isLoading = false;
-
     return GestureDetector(
       onTap: () async {
-        try {
-          setState(() => isLoading = true);
-          await widget.onTap();
-        } catch (_) {
-        } finally {
-          setState(() => isLoading = false);
-        }
+        await onTap();
       },
       child: Container(
         width: buttonWidht.value,
@@ -67,24 +48,14 @@ class _DSButtonState extends State<DSButton> {
             color: borderColor,
           ),
         ),
-        child: isLoading == true
-            ? Container(
-                width: 24,
-                height: 24,
-                padding: const EdgeInsets.all(2.0),
-                child: const CircularProgressIndicator(
-                  color: DSColors.secondary,
-                  strokeWidth: 3,
-                ),
-              )
-            : Center(
-                child: Text(
-                  widget.text,
-                  style: style.copyWith(
-                    color: textColor,
-                  ),
-                ),
-              ),
+        child: Center(
+          child: Text(
+            text,
+            style: style.copyWith(
+              color: textColor,
+            ),
+          ),
+        ),
       ),
     );
   }

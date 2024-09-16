@@ -1,8 +1,19 @@
+import 'dart:async';
 import 'package:marvel_heroes_commons/marvel_heroes_commons.dart';
 import 'package:marvel_heroes_core/marvel_heroes_core.dart';
 import 'package:marvel_heroes_home/src/domain/entities/hero_entity.dart';
 import 'package:marvel_heroes_home/src/domain/use_cases/get_heroes_list_use_case.dart';
 import 'package:marvel_heroes_home/src/presentation/stores/home_store.dart';
+
+enum OrderByEnum {
+  nameDesc('-name', 'Nome Z-A'),
+  nameAsc('name', 'Nome A-Z');
+
+  final String value;
+  final String desc;
+
+  const OrderByEnum(this.value, this.desc);
+}
 
 class HomeController extends BaseController {
   final IGetHeroesListUsecase _getHeroesListUsecase;
@@ -11,14 +22,16 @@ class HomeController extends BaseController {
   RxBool fetchNewPage = RxBool(false);
   RxBool showError = RxBool(false);
   RxBool showSearchBar = RxBool(false);
-
-  List<HeroEntity> _heroesList = List.empty();
-  final RxList<HeroEntity> heroesListFiltered = RxList.empty();
+  RxList<HeroEntity> heroesListFiltered = RxList.empty();
 
   int numberOfHeroes = 0;
   int pageNumber = 0;
-  int limitPerPage = 100;
-  final scrollController = ScrollController();
+  int limitPerPage = 10;
+  OrderByEnum orderByEnum = OrderByEnum.nameAsc;
+  String? searchQuery;
+  ScrollController scrollController = ScrollController();
+  TextEditingController searchTextFieldController = TextEditingController();
+  Timer? debounceTimer;
 
   final HomeStore _homeStore;
 
@@ -42,15 +55,18 @@ class HomeController extends BaseController {
   @override
   void dispose() {
     scrollController.dispose();
+    searchTextFieldController.dispose();
     super.dispose();
   }
 
   void _loadMore() {
-    if (scrollController.position.pixels ==
-        scrollController.position.maxScrollExtent) {
-      fetchNewPage.value = true;
-      pageNumber++;
-      getHeroesList();
+    if (numberOfHeroes > (pageNumber * limitPerPage)) {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+        fetchNewPage.value = true;
+        pageNumber++;
+        getHeroesList();
+      }
     }
   }
 
@@ -83,11 +99,20 @@ class HomeController extends BaseController {
   }
 
   Future<void> getHeroesList() async {
+    showError(false);
     int offset = pageNumber * limitPerPage;
-    _getHeroesListUsecase(offset: offset).then((response) {
-      _heroesList += response.heroes;
+
+    _getHeroesListUsecase(
+      offset: offset,
+      query: searchQuery,
+      order: orderByEnum,
+    ).then((response) {
       numberOfHeroes = response.total;
-      heroesListFiltered.addAll(response.heroes);
+      if (fetchNewPage.value) {
+        heroesListFiltered.addAll(response.heroes);
+      } else {
+        heroesListFiltered.value = response.heroes;
+      }
     }).onError((error, stackTrace) {
       showError(true);
     }).whenComplete(() {
@@ -104,19 +129,26 @@ class HomeController extends BaseController {
     }
   }
 
-  void search(String query) {
-    heroesListFiltered.clear();
-    if (query.isEmpty) {
-      heroesListFiltered.addAll(_heroesList);
-    } else {
-      var filtered = _heroesList.where((hero) {
-        if (hero.name != null) {
-          return hero.name!.toLowerCase().contains(query.toLowerCase());
-        }
-        return false;
-      }).toList();
-      heroesListFiltered.addAll(filtered);
+  void onTypingFinished(String? query) {
+    isLoading(true);
+
+    if (debounceTimer != null) {
+      debounceTimer!.cancel();
     }
+
+    debounceTimer = Timer(const Duration(seconds: 1), () {
+      pageNumber = 0;
+      searchQuery = query;
+      orderByEnum = OrderByEnum.nameAsc;
+      getHeroesList();
+    });
+  }
+
+  Future<void> applyOrderFilter() async {
+    isLoading(true);
+    pageNumber = 0;
+    
+    await getHeroesList();
   }
 
   void goToDetailsPage({required HeroEntity selectedHero}) {

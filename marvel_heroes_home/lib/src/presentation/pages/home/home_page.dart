@@ -2,6 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:marvel_heroes_commons/marvel_heroes_commons.dart';
 import 'package:marvel_heroes_core/marvel_heroes_core.dart';
 import 'package:marvel_heroes_home/src/presentation/pages/home/home_controller.dart';
+import 'package:marvel_heroes_home/src/presentation/pages/home/widgets/radio_list_tile.dart';
 
 class HomePage extends GetView<HomeController> {
   const HomePage({super.key});
@@ -45,7 +46,8 @@ class HomePage extends GetView<HomeController> {
                       child: DSSvgIcons.getIcon(DSSvgIconsEnum.close),
                       onTap: () {
                         controller.showSearchBar.value = false;
-                        controller.search('');
+                        controller.searchTextFieldController.clear();
+                        controller.onTypingFinished(null);
                       },
                     ),
                   )
@@ -78,6 +80,7 @@ class HomePage extends GetView<HomeController> {
 
   Widget _searchTextField() {
     return TextField(
+      controller: controller.searchTextFieldController,
       autofocus: true,
       cursorColor: DSColors.white,
       style: DSTextStyle.body.copyWith(
@@ -96,7 +99,7 @@ class HomePage extends GetView<HomeController> {
           color: DSColors.divider,
         ),
       ),
-      onChanged: controller.search,
+      onChanged: controller.onTypingFinished,
     );
   }
 
@@ -136,6 +139,11 @@ class HomePage extends GetView<HomeController> {
                           ),
                         ],
                       ),
+                    ),
+                    GestureDetector(
+                      onTap: _getBottomSheetOrder,
+                      child: DSSvgIcons.getIcon(DSSvgIconsEnum.filter,
+                          color: DSColors.secondary),
                     ),
                   ],
                 ),
@@ -231,6 +239,43 @@ class HomePage extends GetView<HomeController> {
                 : const SizedBox.shrink(),
           ),
         ],
+      ),
+    );
+  }
+
+  void _getBottomSheetOrder() {
+    BottomSheetWidget.show(
+      child: SafeArea(
+        child: SizedBox(
+          width: DSHelper.width,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(bottom: DSHeight.h_8.value),
+                child: Text(
+                  'Ordenar',
+                  style: DSTextStyle.subtitle.copyWith(
+                    color: DSColors.text,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              OrderByRadioListTileWidget(
+                options: const [
+                  OrderByEnum.nameAsc,
+                  OrderByEnum.nameDesc,
+                ],
+                selectedOption: controller.orderByEnum,
+                onchange: (value) async {
+                  Get.back();
+                  controller.orderByEnum = value;
+                  await controller.applyOrderFilter();
+                },
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

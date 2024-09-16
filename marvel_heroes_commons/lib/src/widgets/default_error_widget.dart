@@ -58,7 +58,7 @@ class DefaultErrorWidget extends StatelessWidget {
             child: DSButton(
               text: 'Tentar novamente',
               onTap: tryAgainPressed ?? () async {},
-              type: DSButtonTypeEnum.secondary,
+              type: DSButtonTypeEnum.outlined,
               size: DSButtonSizeEnum.big,
             ),
           ),

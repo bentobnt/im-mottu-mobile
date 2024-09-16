@@ -11,6 +11,7 @@ enum DSSvgIconsEnum {
   arrowUp,
   info,
   delete,
+  filter,
 }
 
 abstract class DSSvgIcons {
@@ -24,6 +25,7 @@ abstract class DSSvgIcons {
     DSSvgIconsEnum.arrowUp: 'assets/svg/arrow_up.svg',
     DSSvgIconsEnum.info: 'assets/svg/info.svg',
     DSSvgIconsEnum.delete: 'assets/svg/delete.svg',
+    DSSvgIconsEnum.filter: 'assets/svg/filter.svg',
   };
 
   static SvgPicture getIcon(DSSvgIconsEnum type,
