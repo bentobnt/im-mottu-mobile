@@ -54,5 +54,4 @@ Teste desenvolvido no nível 3, atendendo todos os requisitos descritos abaixo:
 >- Foram implementados dois filtros via API, *nameStartsWith* e *orderBy*;
 >- A páginação na listagem de personagens acontece quando o usuário rola a lista de personagens até o final, se tiver mais personagens eles são carregados;
 >- Na *home_page.dart* existem dois códigos que podemos testar o funcionamento do crashlytics;
->- O projeto foi criado como um repositório privado no inicio e depois realizado um git mirror pro fork em questão, a estrutura de pull requests não pode ser copiada por completa, porém, pode ser visualizada no seguinte repositório: [mottu teste](https://github.com/bentobnt/mottu_test);
 
