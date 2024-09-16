@@ -6,8 +6,7 @@ import 'package:marvel_heroes_home/src/presentation/pages/home/home_controller.d
 enum DetailTypeEnum {
   events('events'),
   comics('comics'),
-  series('series'),
-  stories('stories');
+  series('series');
 
   final String value;
 
@@ -45,6 +44,7 @@ class HomeDataSource implements IHomeDataSource {
         queryParameters: parameters,
       );
 
+      
       final response = await _httpProvider.get(request);
 
       return HeroesResponseModel.fromJson(response.data["data"]);

@@ -41,6 +41,7 @@ class FavoritesPage extends GetView<FavoritesController> {
   Widget _getFavoritesContent() {
     return controller.heroesList.isEmpty
         ? DefaultErrorWidget(
+          key: const Key('favorites_empty_error'),
             title: 'Nenhum favorito',
             subTitle:
                 'Você não adicionou nenhum personagem na sua lista de favoritos, mas não se preocupe, você pode adiconá-los na Home clicando no ícone de favoritar e eles serão adicionados.',
@@ -48,12 +49,14 @@ class FavoritesPage extends GetView<FavoritesController> {
         : Scrollbar(
             controller: controller.scrollController,
             child: ListView.builder(
+              key: const Key('list_of_favorites'),
               itemCount: controller.heroesList.length,
               controller: controller.scrollController,
               itemBuilder: (BuildContext context, int index) {
                 final name = controller.heroesList[index].name;
                 final url = controller.heroesList[index].imageUrl;
                 return GestureDetector(
+                  key: const Key('favorite_card'),
                   onTap: () => controller.goToDetailsPage(
                     selectedHero: controller.heroesList[index],
                   ),
@@ -99,6 +102,7 @@ class FavoritesPage extends GetView<FavoritesController> {
                         Padding(
                           padding: EdgeInsets.all(DSHeight.h_12.value),
                           child: GestureDetector(
+                            key: const Key('delete_favorite'),
                             onTap: () => controller
                                 .deleteHero(controller.heroesList[index]),
                             child: DSSvgIcons.getIcon(
