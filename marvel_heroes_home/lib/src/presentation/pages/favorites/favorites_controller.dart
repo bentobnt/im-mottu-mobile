@@ -37,6 +37,7 @@ class FavoritesController extends BaseController {
   }
 
   Future<void> fetchFavorites() async {
+    isLoading(true);
     try {
       List<String> stringList =
           _homeStore.favoritesHeroesIds.map((item) => item.toString()).toList();

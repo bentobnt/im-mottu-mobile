@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:marvel_heroes_commons/marvel_heroes_commons.dart';
 import 'package:marvel_heroes_core/marvel_heroes_core.dart';
 import 'package:marvel_heroes_home/src/domain/entities/hero_entity.dart';
+import 'package:marvel_heroes_home/src/domain/entities/heroes_response_entity.dart';
 import 'package:marvel_heroes_home/src/domain/use_cases/get_heroes_list_use_case.dart';
 import 'package:marvel_heroes_home/src/presentation/stores/home_store.dart';
 
@@ -100,25 +101,27 @@ class HomeController extends BaseController {
 
   Future<void> getHeroesList() async {
     showError(false);
+    isLoading(true);
     int offset = pageNumber * limitPerPage;
+    try {
+      HeroesResponseEntity response = await _getHeroesListUsecase(
+        offset: offset,
+        query: searchQuery,
+        order: orderByEnum,
+      );
 
-    _getHeroesListUsecase(
-      offset: offset,
-      query: searchQuery,
-      order: orderByEnum,
-    ).then((response) {
       numberOfHeroes = response.total;
       if (fetchNewPage.value) {
         heroesListFiltered.addAll(response.heroes);
       } else {
         heroesListFiltered.value = response.heroes;
       }
-    }).onError((error, stackTrace) {
+    } catch (e) {
       showError(true);
-    }).whenComplete(() {
+    } finally {
       isLoading(false);
       fetchNewPage(false);
-    });
+    }
   }
 
   void scrollToBottom(bool bottom) {
@@ -147,7 +150,7 @@ class HomeController extends BaseController {
   Future<void> applyOrderFilter() async {
     isLoading(true);
     pageNumber = 0;
-    
+
     await getHeroesList();
   }
 
