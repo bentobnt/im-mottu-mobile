@@ -21,6 +21,7 @@ class HeroDetailsPage extends StatelessWidget {
       length: controller.tabHeaderTitles.length,
       child: Scaffold(
         floatingActionButton: DSCircularButton(
+          key: const Key('info_button_details'),
           onTap: () => BottomSheetWidget.show(child: _getBottomSheetDetails()),
           button: DSCircularButtonNavigatorEnum.info,
         ),
@@ -154,6 +155,7 @@ class HeroDetailsPage extends StatelessWidget {
                             final name = hero.name ?? '';
                             final image = hero.imageUrl ?? '';
                             return GestureDetector(
+                              key: const Key('related_hero_card'),
                               onTap: () => controller.loadRelatedHero(hero),
                               child: Container(
                                 width: DSHelper.width * 0.35,

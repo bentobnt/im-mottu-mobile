@@ -101,7 +101,7 @@ class HomeController extends BaseController {
 
   Future<void> getHeroesList() async {
     showError(false);
-    isLoading(true);
+    //isLoading(true);
     int offset = pageNumber * limitPerPage;
     try {
       HeroesResponseEntity response = await _getHeroesListUsecase(
@@ -126,13 +126,14 @@ class HomeController extends BaseController {
 
   void scrollToBottom(bool bottom) {
     if (bottom) {
-      scrollController.jumpTo(scrollController.position.maxScrollExtent - 200);
+      scrollController.jumpTo(scrollController.position.maxScrollExtent);
     } else {
       scrollController.jumpTo(0);
     }
   }
 
   void onTypingFinished(String? query) {
+    FocusManager.instance.primaryFocus?.unfocus();
     isLoading(true);
 
     if (debounceTimer != null) {

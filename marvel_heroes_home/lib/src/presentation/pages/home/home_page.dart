@@ -43,6 +43,7 @@ class HomePage extends GetView<HomeController> {
                 ? Padding(
                     padding: EdgeInsets.only(right: DsWidth.w_24.value),
                     child: GestureDetector(
+                      key: const Key('close_search_bar_button'),
                       child: DSSvgIcons.getIcon(DSSvgIconsEnum.close),
                       onTap: () {
                         controller.showSearchBar.value = false;
@@ -54,6 +55,7 @@ class HomePage extends GetView<HomeController> {
                 : Padding(
                     padding: EdgeInsets.only(right: DsWidth.w_24.value),
                     child: GestureDetector(
+                      key: const Key('search_bar_button'),
                       child: DSSvgIcons.getIcon(DSSvgIconsEnum.search),
                       onTap: () {
                         // Testar Crashlytics - descomentar próxima linha
@@ -71,6 +73,7 @@ class HomePage extends GetView<HomeController> {
             ? const ShimmerListWidget(itens: 5)
             : controller.showError.value
                 ? DefaultErrorWidget(
+                    key: const Key('default_error_widget_when_load_heros'),
                     tryAgainPressed: controller.getHeroesList,
                   )
                 : _getHomeContent(),
@@ -80,6 +83,7 @@ class HomePage extends GetView<HomeController> {
 
   Widget _searchTextField() {
     return TextField(
+      key: const Key('search_bar_text_field'),
       controller: controller.searchTextFieldController,
       autofocus: true,
       cursorColor: DSColors.white,
@@ -120,6 +124,7 @@ class HomePage extends GetView<HomeController> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
+                      key: const Key('number_of_heroes_text'),
                       'Mostrando ${controller.heroesListFiltered.length.toString()} de ${controller.numberOfHeroes} personagens',
                       style: DSTextStyle.footnote,
                     ),
@@ -128,22 +133,31 @@ class HomePage extends GetView<HomeController> {
                       child: Row(
                         children: [
                           GestureDetector(
+                            key: const Key('scroll_to_bottom_button'),
                             onTap: () => controller.scrollToBottom(true),
-                            child: DSSvgIcons.getIcon(DSSvgIconsEnum.arrowDown,
-                                color: DSColors.secondary),
+                            child: DSSvgIcons.getIcon(
+                              DSSvgIconsEnum.arrowDown,
+                              color: DSColors.secondary,
+                            ),
                           ),
                           GestureDetector(
+                            key: const Key('scroll_to_top_button'),
                             onTap: () => controller.scrollToBottom(false),
-                            child: DSSvgIcons.getIcon(DSSvgIconsEnum.arrowUp,
-                                color: DSColors.secondary),
+                            child: DSSvgIcons.getIcon(
+                              DSSvgIconsEnum.arrowUp,
+                              color: DSColors.secondary,
+                            ),
                           ),
                         ],
                       ),
                     ),
                     GestureDetector(
+                      key: const Key('filter_button'),
                       onTap: _getBottomSheetOrder,
-                      child: DSSvgIcons.getIcon(DSSvgIconsEnum.filter,
-                          color: DSColors.secondary),
+                      child: DSSvgIcons.getIcon(
+                        DSSvgIconsEnum.filter,
+                        color: DSColors.secondary,
+                      ),
                     ),
                   ],
                 ),
@@ -153,6 +167,7 @@ class HomePage extends GetView<HomeController> {
                 child: Scrollbar(
                   controller: controller.scrollController,
                   child: ListView.builder(
+                    key: const Key('list_view_widget'),
                     itemCount: controller.heroesListFiltered.length,
                     controller: controller.scrollController,
                     itemBuilder: (BuildContext context, int index) {
@@ -162,6 +177,7 @@ class HomePage extends GetView<HomeController> {
                       return GestureDetector(
                         // Testar Crashlytics - descomentar próxima linha
                         //onTap: () => throw Exception(),
+                        key: const Key('card_hero_widget'),
                         onTap: () => controller.goToDetailsPage(
                           selectedHero: controller.heroesListFiltered[index],
                         ),
@@ -207,6 +223,7 @@ class HomePage extends GetView<HomeController> {
                               Padding(
                                 padding: EdgeInsets.all(DSHeight.h_12.value),
                                 child: GestureDetector(
+                                  key: const Key('favorite_hero_button'),
                                   child: Obx(
                                     () => DSSvgIcons.getIcon(
                                       controller.listHeroesIds
@@ -235,7 +252,9 @@ class HomePage extends GetView<HomeController> {
           ),
           Obx(
             () => controller.fetchNewPage.value
-                ? const DSLoading(size: DSLoadingSizeEnum.big)
+                ? const DSLoading(
+                    size: DSLoadingSizeEnum.big,
+                  )
                 : const SizedBox.shrink(),
           ),
         ],
