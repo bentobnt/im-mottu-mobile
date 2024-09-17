@@ -9,7 +9,8 @@ class CacheInterceptor extends Interceptor {
     if (response.requestOptions.method.toUpperCase() == 'GET') {
       String data = jsonEncode(response.data);
       final pref = await SharedPreferences.getInstance();
-      await pref.setString(response.requestOptions.path, data);
+      await pref.setString(
+          'marvel_heroes_cache_${response.requestOptions.path}', data);
     }
     super.onResponse(response, handler);
   }
@@ -24,7 +25,8 @@ class CacheInterceptor extends Interceptor {
 
     if (networkErros.contains(err.type)) {
       final pref = await SharedPreferences.getInstance();
-      String? body = await pref.getString(err.requestOptions.path);
+      String? body =
+          pref.getString('marvel_heroes_cache_${err.requestOptions.path}');
       if (body != null && body.isNotEmpty) {
         dynamic data = jsonDecode(body);
         handler.resolve(

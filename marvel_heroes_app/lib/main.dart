@@ -14,9 +14,8 @@ Future<void> main() async {
     WidgetsFlutterBinding.ensureInitialized();
 
     await _clearPreferences();
-    await _configureFirebase();
 
-    runApp(const MainApp());
+    runApp(MainApp());
   }, (exception, stackTrace) async {
     _catchFlutterExceptions(exception, stackTrace);
   });
@@ -24,7 +23,10 @@ Future<void> main() async {
 
 Future<void> _clearPreferences() async {
   final pref = await SharedPreferences.getInstance();
-  pref.clear();
+  final keys = pref.getKeys().toList().where((key) => key.contains('marvel_heroes_cache_'));
+  for (String key in keys) {
+    pref.remove(key);
+  }
 }
 
 void _catchFlutterExceptions(Object error, StackTrace stack) {
@@ -68,10 +70,12 @@ Future<void> _configureFirebase() async {
 class MainApp extends StatelessWidget {
   final String? initialRoute;
 
-  const MainApp({
+  MainApp({
     super.key,
     this.initialRoute,
-  });
+  }) {
+    _configureFirebase();
+  }
 
   @override
   Widget build(BuildContext context) {
