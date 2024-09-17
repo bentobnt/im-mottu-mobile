@@ -60,6 +60,8 @@ Teste desenvolvido no nível 3, atendendo todos os requisitos descritos abaixo:
 - [x] Ação de clique nos cards da listagem e exibir os detalhes (imagem, nome, descrição e personagens relacionados);
 - [x] Ação de clique nos personagens relacionados e exibir os detalhes (imagem, nome, descrição e personagens relacionados);
 - [x] Funcionalidade de favoritar personagem e excluir dos favoritos;
+- [x] Adição de um novo ícone pro aplicativo;
+- [x] Alteração do nome do aplicativo;
 
 ### Testes
 - [x] Testes de unidade das regras de negócio;
