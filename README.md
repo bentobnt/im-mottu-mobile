@@ -21,6 +21,14 @@ Teste desenvolvido no nível 3, atendendo todos os requisitos descritos abaixo:
 
 ### Arquitetura
 - [x] App Modularizado
+    - Core
+        > Módulo responsável por armazenar e compartilhar componentes necessários para estruturar o aplicativo, como: bibliotecas, provedor http, interceptors, method channel listener, enums, bindings em comum.
+    - Commons
+        > Módulo responsável por armazenar e compartilhar coisas em comum no aplicativo, nele podemos encontrar, imagens, icones, design system, rotas, fontes, enums, tamanhos, widgets, cores, controllers.
+    - Home
+        > Módulo com as principais telas do aplicativo.
+    - App
+        > Aplicativo principal, responsável por sobreescrever os demais módulos e possuir a estrutura de navegação inicial.
 - [x] Arquitetura MVC
 - [x] Clean architecture
 - [x] Princípios do SOLID
@@ -48,7 +56,18 @@ Teste desenvolvido no nível 3, atendendo todos os requisitos descritos abaixo:
 - [x] Ação de clique nos personagens relacionados e exibir os detalhes (imagem, nome, descrição e personagens relacionados);
 
 ### Testes
-- [ ] Criar testes de unidade das regras de negócio;
+- [x] Testes de unidade das regras de negócio;
+> [Home] use cases responsáveis por realizarem as chamadas na api da marvel.
+
+- [x] Testes de integração;
+> [App] testes do fluxo de funcionalidades do aplicativo, como: 
+>- home: carregar lista de personagens;
+>- home: carregar mais personagens na lista, mostrando paginação;
+>- home: buscar personagem através da busca;
+>- home: ordenar listagem;
+>- home: etc;
+
+- [ ] Testes de widget;
 
 ## Observações
 >- Foram implementados dois filtros via API, *nameStartsWith* e *orderBy*;
