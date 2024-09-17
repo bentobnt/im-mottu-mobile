@@ -13,6 +13,10 @@
 $ flutter pub get
 $ flutter run
 ```
+- caso o build do iOS falhar, o comando a seguir deve ser executado na pasta iOS:
+```bash
+$ arch -x86_64 pod update
+```
 
 ## Projeto
 ```bash
@@ -38,6 +42,7 @@ Teste desenvolvido no nível 3, atendendo todos os requisitos descritos abaixo:
 
 ### Serviços adicionais
 - [x] Configurar Firebase crashlytics.
+- [x] Configurar Firebase analytics e logar eventos de telas e ações.
 - [x] Criar channel em Swift, capturar a mudança de conexão, e mostrar uma mensagem de offline no flutter.
 
 ### Git flow
@@ -54,6 +59,9 @@ Teste desenvolvido no nível 3, atendendo todos os requisitos descritos abaixo:
 - [x] Criar uma paginação da listagem;
 - [x] Ação de clique nos cards da listagem e exibir os detalhes (imagem, nome, descrição e personagens relacionados);
 - [x] Ação de clique nos personagens relacionados e exibir os detalhes (imagem, nome, descrição e personagens relacionados);
+- [x] Funcionalidade de favoritar personagem e excluir dos favoritos;
+- [x] Adição de um novo ícone pro aplicativo;
+- [x] Alteração do nome do aplicativo;
 
 ### Testes
 - [x] Testes de unidade das regras de negócio;
@@ -67,10 +75,7 @@ Teste desenvolvido no nível 3, atendendo todos os requisitos descritos abaixo:
 >- home: ordenar listagem;
 >- home: etc;
 
-- [ ] Testes de widget;
-
 ## Observações
 >- Foram implementados dois filtros via API, *nameStartsWith* e *orderBy*;
 >- A páginação na listagem de personagens acontece quando o usuário rola a lista de personagens até o final, se tiver mais personagens eles são carregados;
 >- Na *home_page.dart* existem dois códigos que podemos testar o funcionamento do crashlytics;
-

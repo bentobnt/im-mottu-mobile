@@ -1,0 +1,47 @@
+name: marvel_heroes_commons
+description: "A new Flutter project."
+publish_to: 'none'
+version: 1.0.0
+
+environment:
+  sdk: ^3.5.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  marvel_heroes_core:
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  assets:
+    - assets/images/
+    - assets/fonts/
+    - assets/svg/
+
+  fonts:
+    - family: Montserrat-Bold
+      fonts:
+        - asset: assets/fonts/Montserrat-Bold.ttf
+    - family: Montserrat-SemiBold
+      fonts:
+        - asset: assets/fonts/Montserrat-SemiBold.ttf
+    - family: Montserrat-Medium
+      fonts:
+        - asset: assets/fonts/Montserrat-Medium.ttf
+    - family: Montserrat-Regular
+      fonts:
+        - asset: assets/fonts/Montserrat-Regular.ttf
+    - family: Montserrat-Light
+      fonts:
+        - asset: assets/fonts/Montserrat-Light.ttf
+    - family: Montserrat-Thin
+      fonts:
+        - asset: assets/fonts/Montserrat-Thin.ttf
+
+dependency_overrides:
+  marvel_heroes_core:
+    path: ../marvel_heroes_core
