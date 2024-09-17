@@ -1,7 +1,7 @@
+import 'package:marvel_heroes_core/marvel_heroes_core.dart';
 import 'package:marvel_heroes_home/src/domain/entities/heroes_response_entity.dart';
 import 'package:marvel_heroes_home/src/domain/repositories/get_heroes_list_repository.dart';
 import 'package:marvel_heroes_home/src/domain/use_cases/get_heroes_list_use_case.dart';
-import 'package:marvel_heroes_home/src/presentation/pages/home/home_controller.dart';
 
 class GetHeroesListUsecase implements IGetHeroesListUsecase {
   final IGetHeroesListRepository _getHeroesListRepository;

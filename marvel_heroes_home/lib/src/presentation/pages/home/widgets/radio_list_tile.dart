@@ -1,6 +1,5 @@
 import 'package:marvel_heroes_commons/marvel_heroes_commons.dart';
 import 'package:marvel_heroes_core/marvel_heroes_core.dart';
-import 'package:marvel_heroes_home/src/presentation/pages/home/home_controller.dart';
 
 // ignore: must_be_immutable
 class OrderByRadioListTileWidget extends StatefulWidget {

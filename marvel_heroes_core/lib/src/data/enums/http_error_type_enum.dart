@@ -1,0 +1,4 @@
+enum HttpErrorTypeEnum {
+  defaultError,
+  timeout,
+}

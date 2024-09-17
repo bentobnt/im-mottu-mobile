@@ -37,7 +37,7 @@ class MethodChannelListener {
         }
       });
     } catch (e) {
-      debugPrint(e.toString());
+      Log.error(e.toString());
     }
   }
 }

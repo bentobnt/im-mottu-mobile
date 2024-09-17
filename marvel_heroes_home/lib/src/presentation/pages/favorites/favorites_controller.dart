@@ -45,7 +45,7 @@ class FavoritesController extends BaseController {
       _loadHeroesList();
     } catch (e) {
       showError(true);
-      debugPrint(e.toString());
+      Log.error(e.toString());
     }
   }
 
@@ -62,7 +62,7 @@ class FavoritesController extends BaseController {
         heroesList.add(response.heroes.first);
       } catch (e) {
         showError(true);
-        debugPrint(e.toString());
+        Log.error(e.toString());
       } finally {
         isLoading(false);
       }

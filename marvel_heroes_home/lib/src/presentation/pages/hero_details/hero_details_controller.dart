@@ -4,7 +4,6 @@ import 'package:marvel_heroes_home/src/domain/entities/hero_entity.dart';
 import 'package:marvel_heroes_home/src/domain/entities/heroes_response_entity.dart';
 import 'package:marvel_heroes_home/src/domain/use_cases/get_hero_detail_by_type_use_case.dart';
 import 'package:marvel_heroes_home/src/domain/use_cases/get_related_heroes_use_case.dart';
-import 'package:marvel_heroes_home/src/infra/data_sources/home_datasource.dart';
 import 'package:marvel_heroes_home/src/presentation/pages/hero_details/widgets/comics_tab_widget.dart';
 import 'package:marvel_heroes_home/src/presentation/pages/hero_details/widgets/series_tab_widget.dart';
 import 'package:marvel_heroes_home/src/presentation/stores/home_store.dart';
@@ -69,7 +68,7 @@ class HeroDetailsController extends BaseController
       _setupTabBar();
     } catch (e) {
       showError(true);
-      debugPrint(e.toString());
+      Log.error(e.toString());
     } finally {
       isLoading.value = false;
     }
@@ -98,7 +97,7 @@ class HeroDetailsController extends BaseController
       }
       relatedHeroes.removeWhere((hero) => hero.id == selectedHero?.id);
     } catch (e) {
-      debugPrint(e.toString());
+      Log.error(e.toString());
     } finally {
       isLoadingRelatedHeroes(false);
     }
@@ -153,7 +152,7 @@ class HeroDetailsController extends BaseController
         type: type,
       );
     } catch (e) {
-      debugPrint(e.toString());
+      Log.error(e.toString());
     }
 
     return null;
