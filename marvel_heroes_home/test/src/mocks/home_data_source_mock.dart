@@ -1,8 +1,7 @@
+import 'package:marvel_heroes_core/marvel_heroes_core.dart';
 import 'package:marvel_heroes_home/src/data/data_sources/home_datasource.dart';
 import 'package:marvel_heroes_home/src/data/models/hero_model.dart';
 import 'package:marvel_heroes_home/src/data/models/heroes_response_model.dart';
-import 'package:marvel_heroes_home/src/infra/data_sources/home_datasource.dart';
-import 'package:marvel_heroes_home/src/presentation/pages/home/home_controller.dart';
 
 class HomeDataSourceMock implements IHomeDataSource {
   bool? successFetched;

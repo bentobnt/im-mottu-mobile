@@ -1,20 +1,17 @@
 import 'package:marvel_heroes_core/src/provider/http/http_response.dart';
 
-enum ErrorType {
-  defaultError,
-  timeout,
-}
+import '../../data/enums/http_error_type_enum.dart';
 
 class HttpException implements Exception {
   HttpResponse? response;
-  ErrorType type;
+  HttpErrorTypeEnum type;
   String? error;
 
   String get message => (error ?? '{}').toString();
 
   HttpException({
     this.response,
-    this.type = ErrorType.defaultError,
+    this.type = HttpErrorTypeEnum.defaultError,
     this.error,
   });
 

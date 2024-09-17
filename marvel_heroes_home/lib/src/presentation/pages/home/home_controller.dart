@@ -6,16 +6,6 @@ import 'package:marvel_heroes_home/src/domain/entities/heroes_response_entity.da
 import 'package:marvel_heroes_home/src/domain/use_cases/get_heroes_list_use_case.dart';
 import 'package:marvel_heroes_home/src/presentation/stores/home_store.dart';
 
-enum OrderByEnum {
-  nameDesc('-name', 'Nome Z-A'),
-  nameAsc('name', 'Nome A-Z');
-
-  final String value;
-  final String desc;
-
-  const OrderByEnum(this.value, this.desc);
-}
-
 class HomeController extends BaseController {
   final IGetHeroesListUsecase _getHeroesListUsecase;
 
@@ -77,7 +67,7 @@ class HomeController extends BaseController {
       List<String> savedList = pref.getStringList('favorites_heroes_ids') ?? [];
       _homeStore.favoritesHeroesIds.value = savedList;
     } catch (e) {
-      debugPrint(e.toString());
+      Log.error(e.toString());
     }
   }
 
@@ -95,7 +85,7 @@ class HomeController extends BaseController {
 
       await pref.setStringList('favorites_heroes_ids', stringList);
     } catch (e) {
-      debugPrint(e.toString());
+      Log.error(e.toString());
     }
   }
 

@@ -29,6 +29,7 @@ Future<void> _clearPreferences() async {
 
 void _catchFlutterExceptions(Object error, StackTrace stack) {
   debugPrintStack(stackTrace: stack, label: error.toString());
+  Log.error(error.toString());
   FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
 }
 
