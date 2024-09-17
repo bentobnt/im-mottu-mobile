@@ -49,7 +49,7 @@ Teste desenvolvido no nível 3, atendendo todos os requisitos descritos abaixo:
 - [x] Fazer um **fork** deste repositório para o seu Github, de forma **privada**, e adicionar os usuarios `@brunosmm`, `@BetoMottu`, `@moreirawebmaster`,`@jeanchrocha`.
 - [x] Criar um readme marcando os itens feitos.
 
-### Configurações do projeto
+### Funcionalidades do projeto
 - [x] Criar um projeto Flutter com a seguinte configuração de package: `com.mottu.marvel`.
 - [x] Criar uma Splashscreen customizada;
 - [x] Guardar em cache as consultas realizadas na API Marvel;
@@ -79,3 +79,19 @@ Teste desenvolvido no nível 3, atendendo todos os requisitos descritos abaixo:
 >- Foram implementados dois filtros via API, *nameStartsWith* e *orderBy*;
 >- A páginação na listagem de personagens acontece quando o usuário rola a lista de personagens até o final, se tiver mais personagens eles são carregados;
 >- Na *home_page.dart* existem dois códigos que podemos testar o funcionamento do crashlytics;
+
+## Prints das telas e funcionalidades do app
+> <img src="https://github-production-user-asset-6210df.s3.amazonaws.com/32513744/368209713-3bb746eb-7329-42f0-a135-788420694443.PNG?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20240917%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240917T143610Z&X-Amz-Expires=300&X-Amz-Signature=8422472f596e6a440b0f5f9818295e86c26c8747464e0f87e5d7818d4d43c284&X-Amz-SignedHeaders=host&actor_id=32513744&key_id=0&repo_id=858153668" width="200"/> <img src="https://github.com/user-attachments/assets/d969e5db-4476-4bbf-bcc0-6d2cc436d15c" width="200"/> 
+
+> <img src="https://github.com/user-attachments/assets/7857047f-4363-421d-b013-77703c0864a8" width="200"/> <img src="https://github.com/user-attachments/assets/8dba6303-967a-4d17-b10b-1189cc32b231" width="200"/> <img src="https://github.com/user-attachments/assets/a600ec85-ea68-4190-aab3-60ac7ad49b87" width="200"/> <img src="https://github.com/user-attachments/assets/47d6bf2b-ce34-4785-8c2f-035f2509de79" width="200"/>
+
+> <img src="https://github.com/user-attachments/assets/ac42253c-1d70-45b0-8c3c-82ccfbe0d1b8" width="200"/> <img src="https://github.com/user-attachments/assets/dbaf727d-3943-4ae6-ad30-4f2e23c70c1d" width="200"/>
+
+> <img src="https://github.com/user-attachments/assets/6c83a35c-6b54-47d5-a741-bc65d3b73634" width="200"/> <img src="https://github.com/user-attachments/assets/a090e90c-1d44-4765-93f2-957c7b4e545a" width="200"/>
+
+> <img src="https://github.com/user-attachments/assets/c8490246-288e-4609-bb74-2dd82f5044be" width="200"/> <img src="https://github.com/user-attachments/assets/b31a9aed-757d-4189-b830-48fa6f87e005" width="200"/>
+
+
+
+
+
