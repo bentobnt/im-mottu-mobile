@@ -75,8 +75,6 @@ Teste desenvolvido no nível 3, atendendo todos os requisitos descritos abaixo:
 >- home: ordenar listagem;
 >- home: etc;
 
-- [ ] Testes de widget;
-
 ## Observações
 >- Foram implementados dois filtros via API, *nameStartsWith* e *orderBy*;
 >- A páginação na listagem de personagens acontece quando o usuário rola a lista de personagens até o final, se tiver mais personagens eles são carregados;
