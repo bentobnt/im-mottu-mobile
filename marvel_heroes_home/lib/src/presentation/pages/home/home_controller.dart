@@ -95,7 +95,6 @@ class HomeController extends BaseController {
 
   Future<void> getHeroesList() async {
     showError(false);
-    //isLoading(true);
     int offset = pageNumber * limitPerPage;
     try {
       HeroesResponseEntity response = await _getHeroesListUsecase(
@@ -127,7 +126,6 @@ class HomeController extends BaseController {
   }
 
   void onTypingFinished(String? query) {
-    FocusManager.instance.primaryFocus?.unfocus();
     isLoading(true);
 
     if (debounceTimer != null) {
@@ -139,6 +137,7 @@ class HomeController extends BaseController {
       searchQuery = query;
       orderByEnum = OrderByEnum.nameAsc;
       getHeroesList();
+      FocusManager.instance.primaryFocus?.unfocus();
     });
   }
 
