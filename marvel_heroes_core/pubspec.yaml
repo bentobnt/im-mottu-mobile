@@ -16,8 +16,9 @@ dependencies:
   shared_preferences:
   logger:
   shimmer:
-  firebase_core:
+  firebase_core: 
   firebase_crashlytics:
+  firebase_analytics:
 
 dev_dependencies:
   flutter_test:
