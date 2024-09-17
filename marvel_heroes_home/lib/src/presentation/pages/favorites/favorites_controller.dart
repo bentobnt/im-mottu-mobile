@@ -27,6 +27,8 @@ class FavoritesController extends BaseController {
   @override
   void onInit() {
     super.onInit();
+    logScreen(screen: 'favorites');
+
     fetchFavorites();
   }
 
@@ -76,6 +78,9 @@ class FavoritesController extends BaseController {
     pref.setStringList('favorites_heroes_ids', favoritesListIds);
     heroesList.remove(hero);
     _homeStore.favoritesHeroesIds.value = favoritesListIds;
+    logEvent(
+        name: 'favorite_remove_hero',
+        extraParameters: {'id': hero.id.toString()});
   }
 
   void goToDetailsPage({required HeroEntity selectedHero}) {

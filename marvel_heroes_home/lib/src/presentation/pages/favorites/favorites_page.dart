@@ -1,4 +1,3 @@
-import 'package:flutter/services.dart';
 import 'package:marvel_heroes_commons/marvel_heroes_commons.dart';
 import 'package:marvel_heroes_core/marvel_heroes_core.dart';
 import 'package:marvel_heroes_home/src/presentation/pages/favorites/favorites_controller.dart';
@@ -10,9 +9,6 @@ class FavoritesPage extends GetView<FavoritesController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: DSColors.white,
-        ),
         automaticallyImplyLeading: false,
         backgroundColor: DSColors.primary,
         centerTitle: true,
@@ -25,7 +21,7 @@ class FavoritesPage extends GetView<FavoritesController> {
           ),
         ),
       ),
-      backgroundColor: DSColors.background,
+      backgroundColor: DSColors.white,
       body: Obx(
         () => controller.isLoading.value
             ? const ShimmerListWidget(itens: 5)

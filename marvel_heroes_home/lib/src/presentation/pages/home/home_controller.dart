@@ -38,6 +38,7 @@ class HomeController extends BaseController {
   void onInit() async {
     super.onInit();
     scrollController.addListener(_loadMore);
+    logScreen(screen: 'home');
 
     await _fetchFavorites();
     getHeroesList();
@@ -84,6 +85,9 @@ class HomeController extends BaseController {
       final pref = await SharedPreferences.getInstance();
 
       await pref.setStringList('favorites_heroes_ids', stringList);
+      logEvent(
+          name: add ? 'favorite_hero' : 'favorite_remove_hero',
+          extraParameters: {'id': heroId.toString()});
     } catch (e) {
       Log.error(e.toString());
     }

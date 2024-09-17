@@ -1,4 +1,3 @@
-import 'package:flutter/services.dart';
 import 'package:marvel_heroes_commons/marvel_heroes_commons.dart';
 import 'package:marvel_heroes_core/marvel_heroes_core.dart';
 import 'package:marvel_heroes_home/src/presentation/pages/home/home_controller.dart';
@@ -11,9 +10,6 @@ class HomePage extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: DSColors.white,
-        ),
         automaticallyImplyLeading: false,
         centerTitle: true,
         title: Obx(
@@ -67,10 +63,10 @@ class HomePage extends GetView<HomeController> {
           )
         ],
       ),
-      backgroundColor: DSColors.background,
+      backgroundColor: DSColors.white,
       body: Obx(
         () => controller.isLoading.value
-            ? const ShimmerListWidget(itens: 5)
+            ? _getShimmer()
             : controller.showError.value
                 ? DefaultErrorWidget(
                     key: const Key('default_error_widget_when_load_heros'),
@@ -78,6 +74,44 @@ class HomePage extends GetView<HomeController> {
                   )
                 : _getHomeContent(),
       ),
+    );
+  }
+
+  Widget _getShimmer() {
+    return Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(
+              horizontal: DsWidth.w_24.value, vertical: DSHeight.h_12.value),
+          child: Shimmer.fromColors(
+            enabled: true,
+            baseColor: DSColors.background,
+            highlightColor: DSColors.divider,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color: DSColors.background,
+                    borderRadius: BorderRadius.circular(DSHeight.h_12.value),
+                  ),
+                  height: DSHelper.height * 0.05,
+                  width: DSHelper.width * 0.5,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: DSColors.background,
+                    borderRadius: BorderRadius.circular(DSHeight.h_12.value),
+                  ),
+                  height: DSHelper.height * 0.05,
+                  width: DSHelper.width * 0.15,
+                ),
+              ],
+            ),
+          ),
+        ),
+        const Expanded(child: ShimmerListWidget(itens: 5)),
+      ],
     );
   }
 

@@ -42,6 +42,8 @@ class HeroDetailsController extends BaseController
   @override
   void onInit() {
     super.onInit();
+    logScreen(screen: 'details');
+
     loadHeroDetails();
   }
 

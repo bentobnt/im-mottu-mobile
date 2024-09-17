@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="marvel_heroes"
+        android:label="Personagens Marvel"
         android:name="${applicationName}"
         android:icon="@mipmap/icon">
         <activity

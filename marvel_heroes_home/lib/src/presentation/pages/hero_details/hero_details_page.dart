@@ -1,4 +1,3 @@
-import 'package:flutter/services.dart';
 import 'package:marvel_heroes_commons/marvel_heroes_commons.dart';
 import 'package:marvel_heroes_core/marvel_heroes_core.dart';
 import 'package:marvel_heroes_home/src/presentation/pages/hero_details/hero_details_controller.dart';
@@ -20,15 +19,19 @@ class HeroDetailsPage extends StatelessWidget {
     return DefaultTabController(
       length: controller.tabHeaderTitles.length,
       child: Scaffold(
-        floatingActionButton: DSCircularButton(
-          key: const Key('info_button_details'),
-          onTap: () => BottomSheetWidget.show(child: _getBottomSheetDetails()),
-          button: DSCircularButtonNavigatorEnum.info,
+        floatingActionButton: Obx(
+          () => controller.isLoading.value
+              ? const DSLoading(
+                  size: DSLoadingSizeEnum.medium,
+                )
+              : DSCircularButton(
+                  key: const Key('info_button_details'),
+                  onTap: () =>
+                      BottomSheetWidget.show(child: _getBottomSheetDetails()),
+                  button: DSCircularButtonNavigatorEnum.info,
+                ),
         ),
         appBar: AppBar(
-          systemOverlayStyle: const SystemUiOverlayStyle(
-            statusBarColor: DSColors.white,
-          ),
           centerTitle: true,
           iconTheme: const IconThemeData(
             color: DSColors.white,
@@ -43,7 +46,7 @@ class HeroDetailsPage extends StatelessWidget {
             ),
           ),
         ),
-        backgroundColor: DSColors.background,
+        backgroundColor: DSColors.white,
         body: Obx(
           () => controller.isLoading.value
               ? _getShimmerDetails()
@@ -208,32 +211,47 @@ class HeroDetailsPage extends StatelessWidget {
   }
 
   Widget _getShimmerDetails() {
-    return Padding(
-      padding: EdgeInsets.all(DsWidth.w_8.value),
+    return SingleChildScrollView(
       child: Column(
         children: [
           Shimmer.fromColors(
             enabled: true,
-            baseColor: DSColors.tertiary,
+            baseColor: DSColors.background,
             highlightColor: DSColors.divider,
             child: Container(
-              height: DSHelper.height * 0.2,
+              height: DSHelper.height * 0.3,
               decoration: BoxDecoration(
-                color: DSColors.tertiary,
+                color: DSColors.background,
                 borderRadius: BorderRadius.circular(DSHeight.h_12.value),
               ),
             ),
           ),
-          SizedBox(height: DSHeight.h_24.value),
+          SizedBox(height: DSHeight.h_8.value),
           Shimmer.fromColors(
             enabled: true,
-            baseColor: DSColors.tertiary,
+            baseColor: DSColors.background,
             highlightColor: DSColors.divider,
             child: Container(
-              height: DSHelper.height * 0.5,
+              height: DSHelper.height * 0.1,
               decoration: BoxDecoration(
-                color: DSColors.tertiary,
+                color: DSColors.background,
                 borderRadius: BorderRadius.circular(DSHeight.h_12.value),
+              ),
+            ),
+          ),
+          SizedBox(height: DSHeight.h_8.value),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: DsWidth.w_12.value),
+            child: Shimmer.fromColors(
+              enabled: true,
+              baseColor: DSColors.background,
+              highlightColor: DSColors.divider,
+              child: Container(
+                height: DSHelper.height * 0.4,
+                decoration: BoxDecoration(
+                  color: DSColors.background,
+                  borderRadius: BorderRadius.circular(DSHeight.h_24.value),
+                ),
               ),
             ),
           ),
