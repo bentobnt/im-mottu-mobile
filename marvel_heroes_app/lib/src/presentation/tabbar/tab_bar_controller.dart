@@ -5,8 +5,10 @@ class TabBarController extends BaseController {
   RxInt currentIndex = 0.obs;
   late GlobalKey<NavigatorState> navigatorKey;
 
-  void setNavigatorKey(GlobalKey<NavigatorState> key) {
-    navigatorKey = key;
+  @override
+  void onInit() {
+    super.onInit();
+    navigatorKey = GlobalKey<NavigatorState>();
   }
 
   String get initialRoute {

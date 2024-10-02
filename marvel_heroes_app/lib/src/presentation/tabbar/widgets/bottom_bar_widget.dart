@@ -29,7 +29,6 @@ class _BottomBarPageState extends State<BottomBarWidget> {
         icon: DSSvgIconsEnum.favorite,
       ),
     ];
-    setState(() {});
   }
 
   @override

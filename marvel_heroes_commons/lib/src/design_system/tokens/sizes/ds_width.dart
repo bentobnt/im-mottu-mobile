@@ -1,4 +1,3 @@
-import 'package:marvel_heroes_commons/src/design_system/tokens/sizes/sizes.dart';
 
 import '../../../../marvel_heroes_commons.dart';
 

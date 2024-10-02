@@ -5,11 +5,7 @@ import 'tab_bar_controller.dart';
 import 'widgets/bottom_bar_widget.dart';
 
 class TabBarPage extends GetView<TabBarController> {
-  final navigatorKey = GlobalKey<NavigatorState>();
-
-  TabBarPage({super.key}) {
-    controller.setNavigatorKey(navigatorKey);
-  }
+  const TabBarPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +15,7 @@ class TabBarPage extends GetView<TabBarController> {
       },
       child: Scaffold(
         body: Navigator(
-          key: navigatorKey,
+          key: controller.navigatorKey,
           initialRoute: controller.initialRoute,
           onGenerateRoute: (RouteSettings settings) {
             return <GetPage>[

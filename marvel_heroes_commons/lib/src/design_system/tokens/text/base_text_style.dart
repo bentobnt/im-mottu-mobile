@@ -17,7 +17,7 @@ class BaseTextStyle extends TextStyle {
   }) : super(
           color: color ?? DSColors.text,
           fontWeight: fontWeight ?? FontWeight.w400,
-          package: 'prpass_design_system',
+          package: 'marvel_heroes_commons',
           fontFamily: fontFamily ?? FontFamily.regular.family,
           letterSpacing: letterSpacing ?? 0.0,
         );

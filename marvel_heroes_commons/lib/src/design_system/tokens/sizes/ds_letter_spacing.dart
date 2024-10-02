@@ -1,5 +1,4 @@
 import 'package:marvel_heroes_commons/marvel_heroes_commons.dart';
-import 'package:marvel_heroes_commons/src/design_system/tokens/sizes/sizes.dart';
 
 class DSLetterSpacing {
   static DSLetterSpacing ls_0_1 = DSLetterSpacing._(DSSizesWidths.dsw_0_1);

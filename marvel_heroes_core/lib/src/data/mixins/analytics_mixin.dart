@@ -1,5 +1,4 @@
 import 'package:marvel_heroes_core/marvel_heroes_core.dart';
-import 'package:marvel_heroes_core/src/core/libs/lib_dependencies.dart';
 
 mixin AnalyticsMixin {
   final int limitLength = 100;
